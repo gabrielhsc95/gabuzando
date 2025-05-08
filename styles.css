@@ -1,0 +1,50 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header img.profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+header h1 {
+    font-size: 1.8em;
+    margin: 0;
+}
+
+header nav a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1em;
+    transition: color 0.3s ease;
+}
+
+header nav a:hover {
+    color: #007bff;
+}
+
+header nav a img {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+header nav a img:hover {
+    transform: scale(1.1);
+}
+
+header nav a.social-icon:not(:first-child) {
+    margin-left: 15px;
+}
+
+header nav a.social-icon:first-child {
+    margin-left: 25px;
+}
