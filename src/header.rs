@@ -14,6 +14,7 @@ pub fn Header() -> impl IntoView {
                 <a href="/cv">"CV"</a>
                 <a href="/projects">"Projects"</a>
                 <a href="/blog">"Blog"</a>
+                <a href="setup.gabuzando.dev">Setup</a>
 
                 <a href="https://linkedin.com/in/gabrielhsc95" target="_blank" class="social-icon">
                     <img src="/images/linkedin.png" alt="LinkedIn"/>

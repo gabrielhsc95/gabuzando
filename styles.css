@@ -1,17 +1,25 @@
+body {
+    font-family: 'Fira Mono', monospace;
+    line-height: 1.6;
+    color: #eeeeee;
+    background-color: #202020;
+    margin: 0;
+}
+
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 15px 20px;
-    background-color: #f8f8f8;
+    background-color: #161616;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header img.profile-pic {
-    width: 60px;
-    height: 60px;
+    width: 50x;
+    height: 50px;
     border-radius: 50%;
-    margin-right: 15px;
+    margin-right: 20px;
 }
 
 header h1 {
@@ -22,13 +30,13 @@ header h1 {
 header nav a {
     margin-right: 15px;
     text-decoration: none;
-    color: #333;
+    color: #eeeeee;
     font-size: 1.1em;
     transition: color 0.3s ease;
 }
 
 header nav a:hover {
-    color: #007bff;
+    color: #208cff;
 }
 
 header nav a img {
