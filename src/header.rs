@@ -4,18 +4,19 @@ use leptos::prelude::*;
 pub fn Header() -> impl IntoView {
     view! {
         <header>
-            <div style="display: flex; align-items: center;">
-                <img src="/images/profile.png" alt="Profile Picture" class="profile-pic"/>
-                <h1>"Gabuzando"</h1>
-            </div>
-
+            <a href="/" class="profile-pic">
+                <div class="title">
+                    <img src="/images/profile.png" alt="Profile Picture"/>
+                    <h1>"Gabuzando"</h1>
+                </div>
+            </a>
             <nav>
                 <a href="/">"Home"</a>
                 <a href="/cv">"CV"</a>
-                <a href="/projects">"Projects"</a>
+                <a href="/projects">"Project"</a>
                 <a href="/blog">"Blog"</a>
-                <a href="setup.gabuzando.dev">Setup</a>
-
+                <a href="/about">"About"</a>
+                <a href="https://setup.gabuzando.dev">"Setup"</a>
                 <a href="https://linkedin.com/in/gabrielhsc95" target="_blank" class="social-icon">
                     <img src="/images/linkedin.png" alt="LinkedIn"/>
                 </a>
