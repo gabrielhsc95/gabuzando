@@ -7,12 +7,16 @@ body {
 }
 
 header {
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 15px 20px;
     background-color: #161616;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 }
 
 header a {
@@ -63,4 +67,21 @@ header a.social-icon:not(:first-child) {
 
 header a.social-icon:first-child {
     margin-left: 25px;
+}
+
+main {
+    padding: 20px;
+    padding-top: 80px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 3px;
+    background-color: #161616;
+    color: #eeeeee;
+    font-size: 0.9em;
+    z-index: 100;
 }

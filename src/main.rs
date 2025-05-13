@@ -4,6 +4,7 @@ use leptos_router::path;
 mod about;
 mod blog;
 mod cv;
+mod footer;
 mod header;
 mod home;
 mod projects;
@@ -11,6 +12,7 @@ mod projects;
 use about::AboutPage;
 use blog::BlogPage;
 use cv::CVPage;
+use footer::Footer;
 use header::Header;
 use home::HomePage;
 use projects::ProjectsPage;
@@ -26,7 +28,6 @@ pub fn App() -> impl IntoView {
                         path=path!("/")
                         view=HomePage
                     />
-                    // /contacts has nested routes
                     <Route
                         path=path!("/cv")
                         view=CVPage
@@ -45,6 +46,7 @@ pub fn App() -> impl IntoView {
                     />
                 </Routes>
             </main>
+            <Footer />
         </Router>
     }
 }
