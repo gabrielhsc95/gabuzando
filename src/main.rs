@@ -8,6 +8,7 @@ mod footer;
 mod header;
 mod home;
 mod projects;
+mod window;
 
 use about::AboutPage;
 use blog::BlogPage;

@@ -4,7 +4,19 @@ body {
     color: #eeeeee;
     background-color: #202020;
     margin: 0;
+    text-align: justify;
+    text-justify: inter-word;
 }
+
+body a {
+    color: #208cff
+}
+
+body a:hover {
+    color: #1d5ea3;
+}
+
+
 
 header {
     position: fixed;
@@ -61,17 +73,124 @@ header a.social-icon img {
     height: 20px;
 }
 
-header a.social-icon:not(:first-child) {
-    margin-left: 15px;
-}
-
-header a.social-icon:first-child {
-    margin-left: 25px;
+header a.social-icon:last-child img {
+    margin-right: 20px;
 }
 
 main {
-    padding: 20px;
-    padding-top: 80px;
+    padding: 50px;
+    padding-top: 100px;
+}
+
+.window {
+    background-color: #252525;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: block;
+    position: absolute;
+}
+
+.window-title {
+    font-size: 1.2em;
+    background-color: #161616;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    text-align: center;
+    position: relative;
+    padding: 5px;
+    cursor: move;
+    height: 1.4em;
+    z-index: 0;
+}
+
+.window-title h1 {
+    flex: 1;
+    text-align: left;
+    margin: 0;
+    margin-left: 0.8em;
+    font-size: 1.0em;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.window-title-buttons {
+    display: flex;
+    margin-left: auto;
+    z-index: 2;
+}
+
+.window-title-button {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-left: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    line-height: 0;
+}
+
+.window-title-button.close {
+    background-color: #ff4d4d;
+}
+
+.window-title-button.minimize {
+    background-color: #ffc300;
+}
+
+.window-title-button.maximize {
+    background-color: #00b8ff;
+}
+
+.window-title-button:hover {
+    opacity: 0.8;
+}
+
+.window p {
+    margin: 0;
+    margin-left: 0.8em;
+    margin-right: 0.8em;
+
+}
+
+.window p.author {
+    margin: 0;
+    margin-left: 0.8em;
+    margin-right: 0.8em;
+    text-align: right;
+
+}
+
+.window q {
+    font-style: italic;
+}
+
+.window div.same-line {
+    display: flex;
+    align-items: center;
+    margin-left: 0.8em;
+}
+
+.window-content {
+    line-height: 1.5;
+    padding: 10px;
+}
+
+.window-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.contact {
+    width: 15px;
+    height: 15px;
 }
 
 footer {
@@ -84,4 +203,27 @@ footer {
     color: #eeeeee;
     font-size: 0.9em;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+footer img {
+    width: 15px;
+    height: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+footer div.commit {
+    text-align: left;
+
+}
+
+footer div.rights {
+    text-align: center;
+}
+
+footer div.bongo-cat {
+    text-align: right;
 }
