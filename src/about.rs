@@ -6,8 +6,8 @@ pub fn AboutPage() -> impl IntoView {
     let win_1 = WindowState::new(
         String::from("about/photo"),
         view! {<img src="/images/photo.jpg" alt="Gabriel's Photo"/>},
-        110,
         30,
+        110,
         485,
         680,
     );
@@ -20,8 +20,8 @@ pub fn AboutPage() -> impl IntoView {
             <br />
             <p>"Beyond the world of finance, I am passionate about learning new things. You will often find me at the movies, happily coding personal projects, or immersed in the satisfying click of LEGO bricks."</p>
         },
-        110,
         550,
+        110,
         630,
         450,
     );
@@ -33,8 +33,8 @@ pub fn AboutPage() -> impl IntoView {
             <p>"Lived: 🇭🇺, 🇷🇸"</p>
             <p>"Visited: 🇦🇷, 🇵🇾, 🇸🇰, 🏴󠁧󠁢󠁥󠁮󠁧󠁿, 🇮🇹, 🇻🇦, 🇵🇹, 🇩🇪, 🇲🇽"</p>
         },
-        590,
         550,
+        590,
         300,
         200,
     );
@@ -46,8 +46,8 @@ pub fn AboutPage() -> impl IntoView {
             <div class="same-line"><img src="/images/linkedin.png" alt="LinkedIn" class="contact"/>":"<a href="https://linkedin.com/in/gabrielhsc95" target="_blank">"/in/gabrielhsc95"</a></div>
             <div class="same-line"><img src="/images/github.png" alt="GitHub" class="contact"/>":"<a href="https://github.com/gabrielhsc95" target="_blank">"gabrielhsc95"</a></div>
         },
-        590,
         880,
+        590,
         300,
         200,
     );
@@ -56,8 +56,8 @@ pub fn AboutPage() -> impl IntoView {
         view! {
             <p>"My nickname is Gabu, which I playfully turned into a verb. To bring in a touch of my Brazilian roots, I used the gerund form 'gabuzando' instead of a direct English equivalent. So, 'gabuzando' essentially captures the dynamic essence of 'being Gabu,' and this website is where I will share all the random things I'm up to. I am 'gabuzando'."</p>
         },
-        820,
         30,
+        820,
         700,
         210,
     );
@@ -67,8 +67,8 @@ pub fn AboutPage() -> impl IntoView {
             <p><q>"If I have seen further than others, it is by standing upon the shoulders of giants."</q></p>
             <p class="author">"Isaac Newton"</p>
         },
-        820,
         760,
+        820,
         420,
         210,
     );
