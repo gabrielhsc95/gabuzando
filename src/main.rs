@@ -1,6 +1,8 @@
 use leptos::prelude::*;
 use leptos_router::components::{Route, Router, Routes};
 use leptos_router::path;
+use log::Level;
+use log::info;
 mod about;
 mod blog;
 mod cv;
@@ -54,5 +56,7 @@ pub fn App() -> impl IntoView {
 
 fn main() {
     console_error_panic_hook::set_once();
+    console_log::init_with_level(Level::Debug).unwrap();
+    info!("Leptos app starting...");
     leptos::mount::mount_to_body(App)
 }
