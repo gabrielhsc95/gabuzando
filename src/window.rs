@@ -1,7 +1,6 @@
 use leptos::ev::MouseEvent;
 use leptos::html::Div;
 use leptos::prelude::*;
-use log::debug;
 pub struct WindowState<Content: IntoView + 'static> {
     title: String,
     content: Content,

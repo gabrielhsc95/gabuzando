@@ -3,7 +3,7 @@ use leptos::prelude::*;
 
 #[component]
 pub fn AboutPage() -> impl IntoView {
-    let win_1 = WindowState::new(
+    let photo = WindowState::new(
         String::from("about/photo"),
         view! {<img src="/images/photo.jpg" alt="Gabriel's Photo"/>},
         30,
@@ -11,7 +11,7 @@ pub fn AboutPage() -> impl IntoView {
         485,
         680,
     );
-    let win_2 = WindowState::new(
+    let me = WindowState::new(
         String::from("about/me"),
         view! {
             <p>"I am a software developer, a proud step-dad, and an unapologetic nerd with a dash of delightful weirdness, all fueled by my Brazilian roots. Hailing from " <a href="https://maps.app.goo.gl/7jXanpdULSnsMbwj7">"Londrina, Paraná, Brazil"</a>", my academic background is in the cosmos. I hold a Masters in Cosmology and Astrophysics."</p>
@@ -22,10 +22,10 @@ pub fn AboutPage() -> impl IntoView {
         },
         550,
         110,
-        630,
+        620,
         450,
     );
-    let win_3 = WindowState::new(
+    let countries = WindowState::new(
         String::from("about/countries"),
         view! {
             <p>"Based: 🇺🇸"</p>
@@ -38,7 +38,7 @@ pub fn AboutPage() -> impl IntoView {
         300,
         200,
     );
-    let win_4 = WindowState::new(
+    let contact = WindowState::new(
         String::from("about/contact"),
         view! {
             <div class="same-line"><img src="/images/gmail.png" alt="Email" class="contact"/>":"<a href="mailto:gabrielhsc95@gmail.com">"gabrielhsc95@gmail.com"</a></div>
@@ -48,10 +48,10 @@ pub fn AboutPage() -> impl IntoView {
         },
         880,
         590,
-        300,
+        290,
         200,
     );
-    let win_5 = WindowState::new(
+    let why_gabuzando = WindowState::new(
         String::from("about/why_gabuzando"),
         view! {
             <p>"My nickname is Gabu, which I playfully turned into a verb. To bring in a touch of my Brazilian roots, I used the gerund form 'gabuzando' instead of a direct English equivalent. So, 'gabuzando' essentially captures the dynamic essence of 'being Gabu,' and this website is where I will share all the random things I'm up to. I am 'gabuzando'."</p>
@@ -61,7 +61,7 @@ pub fn AboutPage() -> impl IntoView {
         700,
         210,
     );
-    let win_6 = WindowState::new(
+    let random_quote = WindowState::new(
         String::from("about/random_quote"),
         view! {
             <p><q>"If I have seen further than others, it is by standing upon the shoulders of giants."</q></p>
@@ -69,15 +69,15 @@ pub fn AboutPage() -> impl IntoView {
         },
         760,
         820,
-        420,
+        410,
         210,
     );
     view! {
-        <WindowWidget state=win_1 />
-        <WindowWidget state=win_2 />
-        <WindowWidget state=win_3 />
-        <WindowWidget state=win_4 />
-        <WindowWidget state=win_5 />
-        <WindowWidget state=win_6 />
+        <WindowWidget state=photo />
+        <WindowWidget state=me />
+        <WindowWidget state=countries />
+        <WindowWidget state=contact />
+        <WindowWidget state=why_gabuzando />
+        <WindowWidget state=random_quote />
     }
 }
