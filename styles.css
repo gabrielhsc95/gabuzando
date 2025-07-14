@@ -87,7 +87,7 @@ main {
     border: 1px solid #eeeeee;
     border-radius: 8px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+    overflow: auto;
     display: block;
     position: absolute;
 }
