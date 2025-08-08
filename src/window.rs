@@ -1,9 +1,15 @@
-use leptos::ev::MouseEvent;
+use leptos::ev::PointerEvent;
 use leptos::html::Div;
 use leptos::prelude::*;
-pub struct WindowState<Content: IntoView + 'static> {
+use leptos::wasm_bindgen::JsCast;
+use leptos::web_sys;
+use uuid::Uuid;
+
+#[derive(Clone)]
+pub struct WindowState {
+    id: Uuid,
     title: String,
-    content: Content,
+    content: String,
     x: RwSignal<i32>,
     y: RwSignal<i32>,
     width: i32,
@@ -14,9 +20,10 @@ pub struct WindowState<Content: IntoView + 'static> {
     drag: RwSignal<Option<(i32, i32)>>,
 }
 
-impl<Content: IntoView + 'static> WindowState<Content> {
-    pub fn new(title: String, content: Content, x: i32, y: i32, width: i32, height: i32) -> Self {
+impl WindowState {
+    pub fn new(title: String, content: String, x: i32, y: i32, width: i32, height: i32) -> Self {
         Self {
+            id: Uuid::new_v4(),
             title,
             content,
             x: RwSignal::new(x),
@@ -29,13 +36,16 @@ impl<Content: IntoView + 'static> WindowState<Content> {
             drag: RwSignal::new(None),
         }
     }
+
+    pub fn id(&self) -> String {
+        self.id.to_string()
+    }
 }
 
 #[component]
-pub fn WindowWidget<Content: IntoView + 'static>(state: WindowState<Content>) -> impl IntoView {
+pub fn WindowWidget(state: WindowState) -> impl IntoView {
     let div_ref: NodeRef<Div> = NodeRef::new();
     let body_style = RwSignal::new(String::from(""));
-
     let is_maximized_toggle = move |_| {
         state
             .is_maximized
@@ -52,29 +62,40 @@ pub fn WindowWidget<Content: IntoView + 'static>(state: WindowState<Content>) ->
         state.is_opened.update(|open: &mut bool| *open = !*open);
     };
 
-    let start_drag = move |mouse_event: MouseEvent| {
+    let start_drag = move |pointer_event: PointerEvent| {
+        pointer_event.prevent_default();
+        if let Some(target) = pointer_event.target() {
+            if let Ok(element) = target.dyn_into::<web_sys::Element>() {
+                let _ = element.set_pointer_capture(pointer_event.pointer_id());
+            }
+        }
         state
             .drag
-            .update(|drag| *drag = Some((mouse_event.client_x(), mouse_event.client_y())));
+            .update(|drag| *drag = Some((pointer_event.client_x(), pointer_event.client_y())));
         body_style.set("user-select: none;".to_string());
     };
 
-    let drag_window = move |mouse_event: MouseEvent| {
+    let drag_window = move |pointer_event: PointerEvent| {
         if state.drag.read().is_some() {
             let (initial_x, initial_y) = state.drag.read().unwrap();
-            let mouse_x = mouse_event.client_x();
-            let mouse_y = mouse_event.client_y();
+            let mouse_x = pointer_event.client_x();
+            let mouse_y = pointer_event.client_y();
             let delta_x = mouse_x - initial_x;
             let delta_y = mouse_y - initial_y;
             state
                 .drag
-                .update(|drag| *drag = Some((mouse_event.client_x(), mouse_event.client_y())));
+                .update(|drag| *drag = Some((pointer_event.client_x(), pointer_event.client_y())));
             state.x.update(|x| *x += delta_x);
             state.y.update(|y| *y += delta_y);
         }
     };
 
-    let stop_drag = move |_| {
+    let stop_drag = move |pointer_event: PointerEvent| {
+        if let Some(target) = pointer_event.target() {
+            if let Ok(element) = target.dyn_into::<web_sys::Element>() {
+                let _ = element.release_pointer_capture(pointer_event.pointer_id());
+            }
+        }
         state.drag.update(|drag| *drag = None);
         body_style.set("".to_string());
     };
@@ -103,7 +124,7 @@ pub fn WindowWidget<Content: IntoView + 'static>(state: WindowState<Content>) ->
             }
             style:display=move || {
                 if *state.is_opened.read() {
-                    "block"
+                    "flex"
                 } else {
                     "none"
                 }
@@ -132,9 +153,9 @@ pub fn WindowWidget<Content: IntoView + 'static>(state: WindowState<Content>) ->
         >
             <div
                 class="window-title"
-                on:mousedown=start_drag
-                on:mousemove=drag_window
-                on:mouseup=stop_drag
+                on:pointerdown=start_drag
+                on:pointermove=drag_window
+                on:pointerup=stop_drag
             >
                 <h1>{state.title}</h1>
                 <div class="window-title-buttons">
@@ -158,7 +179,7 @@ pub fn WindowWidget<Content: IntoView + 'static>(state: WindowState<Content>) ->
                     </div>
                 </div>
             </div>
-            <div class="window-content">{state.content}</div>
+            <div class="window-content">{view!{<div inner_html=state.content />}}</div>
         </div>
         <style>
             {"body {"}

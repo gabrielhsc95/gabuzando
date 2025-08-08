@@ -1,5 +1,6 @@
-use crate::cv::{ExperienceItem, ExperienceWidget};
-use crate::projects::{ProjectCategory, ProjectItem, ProjectWidget};
+use crate::cv::ExperienceItem;
+use crate::projects::{ProjectCategory, ProjectItem};
+use crate::utils::join_by_br;
 use crate::window::{WindowState, WindowWidget};
 use leptos::prelude::*;
 
@@ -15,7 +16,7 @@ pub fn HomePage() -> impl IntoView {
             "Participated in research discussions to enhance agent capabilities using various LLM models.".to_string(),
             "Understood client engagement to improve on pain points.".to_string(),
         ],
-    );
+    ).to_string();
     let experience_item_2 = ExperienceItem::new(
         "MSCI".to_string(),
         "Jan. 2024 - Jul. 2024".to_string(),
@@ -25,7 +26,7 @@ pub fn HomePage() -> impl IntoView {
             "Teach Led in Testing, empowering 4 people to implement new features to an automated testing software".to_string(),
             "Managed the testing side implementation of two new pricing models.".to_string(),
         ],
-    );
+    ).to_string();
     let experience_item_3 = ExperienceItem::new(
         "MSCI".to_string(),
         "Jan. 2023 - Dec. 2023".to_string(),
@@ -35,7 +36,7 @@ pub fn HomePage() -> impl IntoView {
             "Analytical Quality Assurance for financial factor models.".to_string(),
             "Developed and reviewed financial building blocks libraries to facilitate the replication of financial models.".to_string()
         ],
-    );
+    ).to_string();
     let experience_item_4 = ExperienceItem::new(
         "MSCI".to_string(),
         " Jun. 2021 - Dec. 2022".to_string(),
@@ -45,7 +46,7 @@ pub fn HomePage() -> impl IntoView {
             "Built an automated testing software for a financial pricing analytics library, and integrated it to the build pipeline.".to_string(),
             "Developed two financial models to estimate financed emissions in accordance with PCAF.".to_string(),
         ],
-    );
+    ).to_string();
     let experience_item_5 = ExperienceItem::new(
         "MSCI".to_string(),
         "Sep. 2020 - Jun. 2021".to_string(),
@@ -55,20 +56,17 @@ pub fn HomePage() -> impl IntoView {
             "Analytical Quality Assurance for a financial pricing analytics library.".to_string(),
             "Engage with developer and research about new features and bugs.".to_string(),
         ],
-    );
+    )
+    .to_string();
     let cv = WindowState::new(
         String::from("cv/experience"),
-        view! {
-            <ExperienceWidget experience_item=experience_item_1 />
-            <br />
-            <ExperienceWidget experience_item=experience_item_2 />
-            <br />
-            <ExperienceWidget experience_item=experience_item_3 />
-            <br />
-            <ExperienceWidget experience_item=experience_item_4 />
-            <br />
-            <ExperienceWidget experience_item=experience_item_5 />
-        },
+        join_by_br(vec![
+            &experience_item_1,
+            &experience_item_2,
+            &experience_item_3,
+            &experience_item_4,
+            &experience_item_5,
+        ]),
         30,
         110,
         490,
@@ -76,13 +74,13 @@ pub fn HomePage() -> impl IntoView {
     );
     let about = WindowState::new(
         String::from("about/me"),
-        view! {
-            <p>"I am a software developer, a loving partner, a proud step-dad, and an unapologetic nerd with a dash of delightful weirdness, all fueled by my Brazilian roots. Hailing from " <a href="https://maps.app.goo.gl/7jXanpdULSnsMbwj7">"Londrina, Paraná, Brazil"</a>", my academic background is in the cosmos. I hold a Masters in Cosmology and Astrophysics."</p>
+        String::from(
+            "<p>I am a software developer, a loving partner, a proud step-dad, and an unapologetic nerd with a dash of delightful weirdness, all fueled by my Brazilian roots. Hailing from  <a href=\"https://maps.app.goo.gl/7jXanpdULSnsMbwj7\">Londrina, Paraná, Brazil</a>, my academic background is in the cosmos. I hold a Masters in Cosmology and Astrophysics.</p>
             <br />
-            <p>"Life took a fascinating turn, leading me to the finance industry. I have navigated roles from Financial Engineer (Analytical Quality Assurance) to my current position as a Quantitative Researcher. Ultimately, I see myself as a tool builder, constantly creating and finding solutions."</p>
+            <p>Life took a fascinating turn, leading me to the finance industry. I have navigated roles from Financial Engineer (Analytical Quality Assurance) to my current position as a Quantitative Researcher. Ultimately, I see myself as a tool builder, constantly creating and finding solutions.</p>
             <br />
-            <p>"Beyond the world of finance, I am passionate about learning new things. You will often find me at the movies, happily coding personal projects, or immersed in the satisfying click of LEGO bricks."</p>
-        },
+            <p>Beyond the world of finance, I am passionate about learning new things. You will often find me at the movies, happily coding personal projects, or immersed in the satisfying click of LEGO bricks.</p>"
+        ),
         550,
         110,
         620,
@@ -93,13 +91,13 @@ pub fn HomePage() -> impl IntoView {
         "More than just a Tic Tac Toe, it is binary game engine and Artificial Intelligence."
             .to_string(),
         ProjectCategory::Mine,
-    );
+    )
+    .to_string();
     // in home page
     let project_mine = WindowState::new(
         String::from("project/something"),
-        view! {
-            <ProjectWidget project_item=project_mine_item />
-        },
+        project_mine_item,
+        // },
         550,
         590,
         300,
@@ -107,7 +105,7 @@ pub fn HomePage() -> impl IntoView {
     );
     let blog = WindowState::new(
         String::from("blog/best"),
-        view! {<p>"list, ordered by most likes, of blog posts."</p>},
+        String::from("<p>list, ordered by most likes, of blog posts.</p>"),
         870,
         590,
         300,
@@ -117,19 +115,17 @@ pub fn HomePage() -> impl IntoView {
         "https://github.com/Giovani-Costa/project_xmercury".to_string(),
         "Manage a Tabletop RPG game using a discord bot and streamlit app.".to_string(),
         ProjectCategory::Mentor,
-    );
+    )
+    .to_string();
     let project_mentor_2 = ProjectItem::new(
         "https://github.com/Giovani-Costa/project_xlunar".to_string(),
         "Discord bot to help student for standards exams.".to_string(),
         ProjectCategory::Mentor,
-    );
+    )
+    .to_string();
     let project_mentor = WindowState::new(
         String::from("project/mentor"),
-        view! {
-            <ProjectWidget project_item=project_mentor_1 />
-            <br />
-            <ProjectWidget project_item=project_mentor_2 />
-        },
+        join_by_br(vec![&project_mentor_1, &project_mentor_2]),
         30,
         920,
         820,
@@ -137,9 +133,7 @@ pub fn HomePage() -> impl IntoView {
     );
     let home = WindowState::new(
         String::from("home/greetings"),
-        view! {
-            <p>"hi"</p>
-        },
+        String::from("<p>hi</p>"),
         870,
         1070,
         300,

@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 console_error_panic_hook = "0.1.7"
 console_log = "1.0.0"
-leptos = { version = "0.8.0", features = ["csr"] }
-leptos_router = "0.8.0"
+leptos = { version = "0.8.6", features = ["csr"] }
+leptos_router = "0.8.5"
 log = "0.4.27"
+uuid = { version = "1.17.0", features = ["v4", "js"] }

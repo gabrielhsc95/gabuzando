@@ -5,7 +5,7 @@ use leptos::prelude::*;
 pub fn BlogPage() -> impl IntoView {
     let post = WindowState::new(
         String::from("blog/post"),
-        view! {<p>"The latest blog post will go here."</p>},
+        String::from("<p>The latest blog post will go here.</p>"),
         30,
         110,
         810,
@@ -13,7 +13,7 @@ pub fn BlogPage() -> impl IntoView {
     );
     let history = WindowState::new(
         String::from("blog/history"),
-        view! {<p>"list, order from recent to old, of blog posts."</p>},
+        String::from("<p>list, order from recent to old, of blog posts.</p>"),
         870,
         110,
         300,
@@ -21,7 +21,7 @@ pub fn BlogPage() -> impl IntoView {
     );
     let best = WindowState::new(
         String::from("blog/best"),
-        view! {<p>"list, ordered by most likes, of blog posts."</p>},
+        String::from("<p>list, ordered by most likes, of blog posts.</p>"),
         870,
         590,
         300,
@@ -29,7 +29,7 @@ pub fn BlogPage() -> impl IntoView {
     );
     let random = WindowState::new(
         String::from("blog/random"),
-        view! {<p>"random blog post title."</p>},
+        String::from("<p>random blog post title.</p>"),
         870,
         1070,
         300,
