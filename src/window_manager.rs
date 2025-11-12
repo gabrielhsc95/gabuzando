@@ -1,39 +1,25 @@
-use crate::window::{WindowState, WindowWidget};
-use leptos::prelude::*;
 use std::collections::HashMap;
+use yew::prelude::*;
 
-pub struct WindowManager<'a> {
-    pages: HashMap<String, Vec<&'a WindowState>>,
+use crate::not_found::PageNotFound;
+use crate::window::{WindowProps, WindowWidget};
+
+#[derive(Properties, PartialEq)]
+pub struct WindowManagerProps {
+    pub current_page: AttrValue,
+    pub pages: HashMap<AttrValue, Vec<WindowProps>>, // I might be able to use Children here
 }
-
-impl<'a> WindowManager<'a> {
-    pub fn new(pages: HashMap<String, Vec<&'a WindowState>>) -> Self {
-        Self { pages }
-    }
-
-    fn render_page(&self, page: &str) {
-        let page_windows = self.pages.get(page);
-        let page_windows = match page_windows {
-            Some(windows) => Some(windows.clone()),
-            None => None,
-        };
-        todo!();
-        // view! {
-        //     <div>
-        //         {move ||{
-        //             if let Some(windows) = page_windows {
-        //                 view! {
-        //                     <For
-        //                         each=move || windows
-        //                         key=|window| window.id()
-        //                         children=move |window| view! { <WindowWidget state=window /> }
-        //                     />
-        //                 }
-        //             } else {
-        //                 view! {<NotFoundPage />}
-        //             }
-        //         }}
-        //     </div>
-        // }
+#[function_component(WindowManager)]
+pub fn window_manager(props: &WindowManagerProps) -> Html {
+    let current_page = &props.pages.get(&props.current_page);
+    html! {
+        match current_page {
+            Some(windows) => {
+                html! {
+                    { for windows.iter().map(|w_props| html! { <WindowWidget ..w_props.clone() /> }) }
+                }
+            },
+            None => html! {<PageNotFound />}
+        }
     }
 }

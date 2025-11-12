@@ -23,7 +23,7 @@ impl ProjectItem {
         }
     }
 
-    pub fn to_string(self) -> String {
+    pub fn to_html(self) -> String {
         let mut project_name = self.github.clone();
         project_name = project_name.split("/").last().unwrap().to_string();
         format!(
@@ -43,7 +43,7 @@ pub fn ProjectsPage() -> impl IntoView {
         "A bond pricer in Rust.".to_string(),
         ProjectCategory::Mine,
     )
-    .to_string();
+    .to_html();
     let project_mine_1 = WindowState::new(
         String::from("project/something"),
         project_mine_item_1,
@@ -58,7 +58,7 @@ pub fn ProjectsPage() -> impl IntoView {
             .to_string(),
         ProjectCategory::Mine,
     )
-    .to_string();
+    .to_html();
     let project_mine_2 = WindowState::new(
         String::from("project/something"),
         project_mine_item_2,
@@ -74,7 +74,7 @@ pub fn ProjectsPage() -> impl IntoView {
             .to_string(),
         ProjectCategory::Mine,
     )
-    .to_string();
+    .to_html();
     // in home page
     let project_mine_3 = WindowState::new(
         String::from("project/something"),
@@ -84,18 +84,32 @@ pub fn ProjectsPage() -> impl IntoView {
         300,
         300,
     );
+    let project_mine_item_4 = ProjectItem::new(
+        "https://github.com/gabrielhsc95/cinema-city".to_string(),
+        "Scrapes the movies that were screening in English in Budapest, Hungary. So I could go to the movies.".to_string(),
+        ProjectCategory::Mine,
+    )
+    .to_html();
+    let project_mine_4 = WindowState::new(
+        String::from("project/something"),
+        project_mine_item_4,
+        30,
+        110,
+        300,
+        300,
+    );
     let project_mentor_1 = ProjectItem::new(
         "https://github.com/Giovani-Costa/project_xmercury".to_string(),
         "Manage a Tabletop RPG game using a discord bot and streamlit app.".to_string(),
         ProjectCategory::Mentor,
     )
-    .to_string();
+    .to_html();
     let project_mentor_2 = ProjectItem::new(
         "https://github.com/Giovani-Costa/project_xlunar".to_string(),
         "Discord bot to help student for standards exams.".to_string(),
         ProjectCategory::Mentor,
     )
-    .to_string();
+    .to_html();
     let project_mentor = WindowState::new(
         String::from("project/mentor"),
         join_by_br(vec![&project_mentor_1, &project_mentor_2]),
@@ -108,6 +122,7 @@ pub fn ProjectsPage() -> impl IntoView {
         <WindowWidget state=project_mine_1 />
         <WindowWidget state=project_mine_2 />
         <WindowWidget state=project_mine_3 />
+        <WindowWidget state=project_mine_4 />
         <WindowWidget state=project_mentor />
     }
 }

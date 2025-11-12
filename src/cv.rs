@@ -29,7 +29,7 @@ impl ExperienceItem {
         }
     }
 
-    pub fn to_string(self) -> String {
+    pub fn to_html(self) -> String {
         let description = self
             .description
             .iter()
@@ -72,7 +72,7 @@ impl EducationItem {
         }
     }
 
-    pub fn to_string(self) -> String {
+    pub fn to_html(self) -> String {
         format!("
             <div style=\"display: flex; justify-content: space-between; align-items: center; width: 100%;\">
                 <div><b>{}</b></div>
@@ -151,7 +151,7 @@ pub fn CVPage() -> impl IntoView {
             "Participated in research discussions to enhance agent capabilities using various LLM models.".to_string(),
             "Understood client engagement to improve on pain points.".to_string(),
         ],
-    ).to_string();
+    ).to_html();
     let experience_item_2 = ExperienceItem::new(
         "MSCI".to_string(),
         "Jan. 2024 - Jul. 2024".to_string(),
@@ -161,7 +161,7 @@ pub fn CVPage() -> impl IntoView {
             "Teach Led in Testing, empowering 4 people to implement new features to an automated testing software".to_string(),
             "Managed the testing side implementation of two new pricing models.".to_string(),
         ],
-    ).to_string();
+    ).to_html();
     let experience_item_3 = ExperienceItem::new(
         "MSCI".to_string(),
         "Jan. 2023 - Dec. 2023".to_string(),
@@ -171,7 +171,7 @@ pub fn CVPage() -> impl IntoView {
             "Analytical Quality Assurance for financial factor models.".to_string(),
             "Developed and reviewed financial building blocks libraries to facilitate the replication of financial models.".to_string()
         ],
-    ).to_string();
+    ).to_html();
     let experience_item_4 = ExperienceItem::new(
         "MSCI".to_string(),
         " Jun. 2021 - Dec. 2022".to_string(),
@@ -181,7 +181,7 @@ pub fn CVPage() -> impl IntoView {
             "Built an automated testing software for a financial pricing analytics library, and integrated it to the build pipeline.".to_string(),
             "Developed two financial models to estimate financed emissions in accordance with PCAF.".to_string(),
         ],
-    ).to_string();
+    ).to_html();
     let experience_item_5 = ExperienceItem::new(
         "MSCI".to_string(),
         "Sep. 2020 - Jun. 2021".to_string(),
@@ -192,7 +192,7 @@ pub fn CVPage() -> impl IntoView {
             "Engage with developer and research about new features and bugs.".to_string(),
         ],
     )
-    .to_string();
+    .to_html();
     let experience = WindowState::new(
         String::from("cv/experience"),
         join_by_br(vec![
@@ -213,28 +213,28 @@ pub fn CVPage() -> impl IntoView {
         "Budapest, Hungary".to_string(),
         "Sep. 2018 – Jun. 2020".to_string(),
     )
-    .to_string();
+    .to_html();
     let education_item_2 = EducationItem::new(
         "Physics (BSc)".to_string(),
         "Universidade Estadual de Londrina (UEL)".to_string(),
         "Londrina, Paraná, Brazil".to_string(),
         "Feb. 2012 – Mar. 2017".to_string(),
     )
-    .to_string();
+    .to_html();
     let education_item_3 = EducationItem::new(
         "Physics (BSc)".to_string(),
         "Xavier University (XU)".to_string(),
         "Cincinnati, Ohio, United States".to_string(),
         "Aug. 2014 – May. 2015".to_string(),
     )
-    .to_string();
+    .to_html();
     let education_item_4 = EducationItem::new(
         "Electromechanics (Technical Course)".to_string(),
         "Serviço Nacional de Aprendizagem Industrial (SENAI)".to_string(),
         "Londrina, Paraná, Brazil".to_string(),
         "Feb. 2010 – Dec. 2011".to_string(),
     )
-    .to_string();
+    .to_html();
     let education = WindowState::new(
         String::from("cv/education"),
         join_by_br(vec![
