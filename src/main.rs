@@ -32,7 +32,7 @@ pub fn App() -> impl IntoView {
     // let about_me = WindowState::new(
     //     String::from("about/me"),
     //     String::from(
-    //         "<p>I am a software developer, a loving partner, a proud step-dad, and an unapologetic nerd with a dash of delightful weirdness, all fueled by my Brazilian roots. Hailing from  <a href=\"https://maps.app.goo.gl/7jXanpdULSnsMbwj7\">Londrina, Paraná, Brazil</a>, my academic background is in the cosmos. I hold a Masters in Cosmology and Astrophysics.</p>
+    //         "<p>I am a software developer, and an unapologetic nerd with a dash of delightful weirdness, all fueled by my Brazilian roots. Hailing from  <a href=\"https://maps.app.goo.gl/7jXanpdULSnsMbwj7\">Londrina, Paraná, Brazil</a>, my academic background is in the cosmos. I hold a Masters in Cosmology and Astrophysics.</p>
     //         <br />
     //         <p>Life took a fascinating turn, leading me to the finance industry. I have navigated roles from Financial Engineer (Analytical Quality Assurance) to my current position as a Quantitative Researcher. Ultimately, I see myself as a tool builder, constantly creating and finding solutions.</p>
     //         <br />
