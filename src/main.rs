@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use web_sys;
 use yew::prelude::*;
 
-// mod about;
+mod about;
 // mod blog;
 // mod cv;
 mod footer;
@@ -60,24 +60,7 @@ pub fn app() -> Html {
             ),
             (
                 AttrValue::from("/about"),
-                vec![WindowProps {
-                    title: AttrValue::from("About"),
-                    content: yew::html::ChildrenRenderer::new(vec![html! {
-                        <div>
-                            <h2>{"About"}</h2>
-                            <p>{"asdasdsad"}</p>
-                            <ul>
-                                <li>{"sdfgsdfg"}</li>
-                                <li>{"sdfghgdfsg"}</li>
-                            </ul>
-                        </div>
-                    }]),
-                    x: 26.0,
-                    y: 10.0,
-                    width: 26.0,
-                    height: 46.0,
-                    buffer: 20.0,
-                }],
+                about::get_about_windows(),
             ),
         ]),
     };
