@@ -11,7 +11,7 @@ pub struct ProjectLoaderProps {
 
 #[function_component(ProjectLoader)]
 pub fn project_loader(props: &ProjectLoaderProps) -> Html {
-    let fetch_state = use_fetch::<ProjectsContent>("/text/projects.json");
+    let fetch_state = use_fetch::<ProjectsContent>("/text/projects/projects.json");
     let id = props.id.clone();
     
     // We could memoize finding the project, but the list is small.
