@@ -1,44 +1,55 @@
-use crate::window::{WindowState, WindowWidget};
-use leptos::prelude::*;
+use yew::prelude::*;
+use crate::window::WindowProps;
 
-#[component]
-pub fn BlogPage() -> impl IntoView {
-    let post = WindowState::new(
-        String::from("blog/post"),
-        String::from("<p>The latest blog post will go here.</p>"),
-        30,
-        110,
-        810,
-        1110,
-    );
-    let history = WindowState::new(
-        String::from("blog/history"),
-        String::from("<p>list, order from recent to old, of blog posts.</p>"),
-        870,
-        110,
-        300,
-        450,
-    );
-    let best = WindowState::new(
-        String::from("blog/best"),
-        String::from("<p>list, ordered by most likes, of blog posts.</p>"),
-        870,
-        590,
-        300,
-        450,
-    );
-    let random = WindowState::new(
-        String::from("blog/random"),
-        String::from("<p>random blog post title.</p>"),
-        870,
-        1070,
-        300,
-        150,
-    );
-    view! {
-        <WindowWidget state=post />
-        <WindowWidget state=history />
-        <WindowWidget state=best />
-        <WindowWidget state=random />
-    }
+pub fn get_blog_windows() -> Vec<WindowProps> {
+    vec![
+        // Post (Cells 1, 2, 4, 5, 7, 8 - Left & Center Cols, Spanning All Rows)
+        WindowProps {
+            title: AttrValue::from("blog/post"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <p>{"The latest blog post will go here."}</p>
+            }]),
+            x: 1.0,
+            y: 10.0,
+            width: 64.2, // -1% right gap
+            height: 84.9, // Full height
+            buffer: 20.0,
+        },
+        // History (Cell 3 - Top Right)
+        WindowProps {
+            title: AttrValue::from("blog/history"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <p>{"list, order from recent to old, of blog posts."}</p>
+            }]),
+            x: 67.2, // +1% left
+            y: 10.0,
+            width: 31.6, // -1% left
+            height: 27.3, // -1% bottom
+            buffer: 20.0,
+        },
+        // Best (Cell 6 - Middle Right)
+        WindowProps {
+            title: AttrValue::from("blog/best"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <p>{"list, ordered by most likes, of blog posts."}</p>
+            }]),
+            x: 67.2, // +1% left
+            y: 39.3, // +1% top
+            width: 31.6, // -1% left
+            height: 26.3, // -1% top, -1% bottom
+            buffer: 20.0,
+        },
+        // Random (Cell 9 - Bottom Right)
+        WindowProps {
+            title: AttrValue::from("blog/random"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <p>{"random blog post title."}</p>
+            }]),
+            x: 67.2, // +1% left
+            y: 67.6, // +1% top
+            width: 31.6, // -1% left
+            height: 27.3, // -1% top
+            buffer: 20.0,
+        },
+    ]
 }

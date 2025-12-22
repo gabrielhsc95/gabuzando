@@ -4,7 +4,7 @@ use web_sys;
 use yew::prelude::*;
 
 mod about;
-// mod blog;
+mod blog;
 mod cv;
 mod footer;
 mod header;
@@ -65,6 +65,10 @@ pub fn app() -> Html {
             (
                 AttrValue::from("/cv"),
                 cv::get_cv_windows(),
+            ),
+            (
+                AttrValue::from("/blog"),
+                blog::get_blog_windows(),
             ),
         ]),
     };
