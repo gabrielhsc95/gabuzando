@@ -8,10 +8,9 @@ mod blog;
 mod cv;
 mod footer;
 mod header;
-// mod home;
+mod home;
 mod not_found;
 mod projects;
-// mod utils;
 mod window;
 mod window_manager;
 
@@ -38,25 +37,7 @@ pub fn app() -> Html {
         pages: HashMap::from([
             (
                 AttrValue::from("/"),
-                vec![WindowProps {
-                    title: AttrValue::from("Home"),
-                    content: yew::html::ChildrenRenderer::new(vec![html! {
-                        <div>
-                            <h2>{"Home"}</h2>
-                            <p>{"This is your desktop home. Feel free to drag this window around!"}</p>
-                            <ul>
-                                <li>{"Rust version: 1.75+"}</li>
-                                <li>{"Framework: Yew"}</li>
-                            </ul>
-                        </div>
-                    }]),
-
-                    x: 2.0,
-                    y: 12.0,
-                    width: 42.0,
-                    height: 80.0,
-                    buffer: 20.0,
-                }],
+                home::get_home_windows(),
             ),
             (
                 AttrValue::from("/about"),
@@ -91,6 +72,6 @@ pub fn app() -> Html {
 fn main() {
     console_error_panic_hook::set_once();
     console_log::init_with_level(Level::Debug).unwrap();
-    info!("Yew app starting...");
+    info!("Gabuzando starting...");
     yew::Renderer::<App>::new().render();
 }
