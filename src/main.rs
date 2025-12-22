@@ -10,7 +10,7 @@ mod footer;
 mod header;
 // mod home;
 mod not_found;
-// mod projects;
+mod projects;
 // mod utils;
 mod window;
 mod window_manager;
@@ -69,6 +69,10 @@ pub fn app() -> Html {
             (
                 AttrValue::from("/blog"),
                 blog::get_blog_windows(),
+            ),
+            (
+                AttrValue::from("/projects"),
+                projects::get_projects_windows(),
             ),
         ]),
     };

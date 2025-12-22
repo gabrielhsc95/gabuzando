@@ -1,128 +1,133 @@
-use crate::utils::join_by_br;
-use crate::window::{WindowState, WindowWidget};
-use leptos::prelude::*;
+use yew::prelude::*;
+use crate::window::WindowProps;
 
-pub enum ProjectCategory {
-    Mine,
-    Mentor,
-    Contributor,
-}
-
-pub struct ProjectItem {
-    github: String,
-    description: String,
-    category: ProjectCategory,
-}
-
-impl ProjectItem {
-    pub fn new(github: String, description: String, category: ProjectCategory) -> Self {
-        Self {
-            github,
-            description,
-            category,
-        }
-    }
-
-    pub fn to_html(self) -> String {
-        let mut project_name = self.github.clone();
-        project_name = project_name.split("/").last().unwrap().to_string();
-        format!(
-            "
-            <b><a href=\"{}\" target=\"_blank\">{}</a></b>
-            <p>{}</p>
-        ",
-            self.github, project_name, self.description,
-        )
-    }
-}
-
-#[component]
-pub fn ProjectsPage() -> impl IntoView {
-    let project_mine_item_1 = ProjectItem::new(
-        "https://github.com/gabrielhsc95/crustacean-capital".to_string(),
-        "A bond pricer in Rust.".to_string(),
-        ProjectCategory::Mine,
-    )
-    .to_html();
-    let project_mine_1 = WindowState::new(
-        String::from("project/something"),
-        project_mine_item_1,
-        30,
-        110,
-        300,
-        300,
-    );
-    let project_mine_item_2 = ProjectItem::new(
-        "https://github.com/gabrielhsc95/gabuzando".to_string(),
-        "This website! Built in Rust to showcase my experience and some of my thoughts."
-            .to_string(),
-        ProjectCategory::Mine,
-    )
-    .to_html();
-    let project_mine_2 = WindowState::new(
-        String::from("project/something"),
-        project_mine_item_2,
-        380,
-        110,
-        300,
-        300,
-    );
-    //
-    let project_mine_item_3 = ProjectItem::new(
-        "https://github.com/gabrielhsc95/tictactoe".to_string(),
-        "More than just a Tic Tac Toe, it is binary game engine and Artificial Intelligence."
-            .to_string(),
-        ProjectCategory::Mine,
-    )
-    .to_html();
-    // in home page
-    let project_mine_3 = WindowState::new(
-        String::from("project/something"),
-        project_mine_item_3,
-        550,
-        590,
-        300,
-        300,
-    );
-    let project_mine_item_4 = ProjectItem::new(
-        "https://github.com/gabrielhsc95/cinema-city".to_string(),
-        "Scrapes the movies that were screening in English in Budapest, Hungary. So I could go to the movies.".to_string(),
-        ProjectCategory::Mine,
-    )
-    .to_html();
-    let project_mine_4 = WindowState::new(
-        String::from("project/something"),
-        project_mine_item_4,
-        30,
-        110,
-        300,
-        300,
-    );
-    let project_mentor_1 = ProjectItem::new(
-        "https://github.com/Giovani-Costa/project_xmercury".to_string(),
-        "Manage a Tabletop RPG game using a discord bot and streamlit app.".to_string(),
-        ProjectCategory::Mentor,
-    )
-    .to_html();
-    let project_mentor_2 = ProjectItem::new(
-        "https://github.com/Giovani-Costa/project_xlunar".to_string(),
-        "Discord bot to help student for standards exams.".to_string(),
-        ProjectCategory::Mentor,
-    )
-    .to_html();
-    let project_mentor = WindowState::new(
-        String::from("project/mentor"),
-        join_by_br(vec![&project_mentor_1, &project_mentor_2]),
-        30,
-        920,
-        820,
-        250,
-    );
-    view! {
-        <WindowWidget state=project_mine_1 />
-        <WindowWidget state=project_mine_2 />
-        <WindowWidget state=project_mine_3 />
-        <WindowWidget state=project_mine_4 />
-        <WindowWidget state=project_mentor />
-    }
+pub fn get_projects_windows() -> Vec<WindowProps> {
+    vec![
+        // Cell 1: Crustacean Capital
+        WindowProps {
+            title: AttrValue::from("project/crustacean-capital"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <>
+                    <b><a href="https://github.com/gabrielhsc95/crustacean-capital" target="_blank">{"crustacean-capital"}</a></b>
+                    <p>{"A bond pricer in Rust."}</p>
+                </>
+            }]),
+            x: 1.0,
+            y: 10.0,
+            width: 31.6, // -1% right
+            height: 27.3, // -1% bottom
+            buffer: 20.0,
+        },
+        // Cell 2: Gabuzando
+        WindowProps {
+            title: AttrValue::from("project/gabuzando"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <>
+                    <b><a href="https://github.com/gabrielhsc95/gabuzando" target="_blank">{"gabuzando"}</a></b>
+                    <p>{"This website! Built in Rust to showcase my experience and some of my thoughts."}</p>
+                </>
+            }]),
+            x: 34.6, // +1% left
+            y: 10.0,
+            width: 30.6, // -1% left, -1% right
+            height: 27.3, // -1% bottom
+            buffer: 20.0,
+        },
+        // Cell 3: Cinema City
+        WindowProps {
+            title: AttrValue::from("project/cinema-city"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <>
+                    <b><a href="https://github.com/gabrielhsc95/cinema-city" target="_blank">{"cinema-city"}</a></b>
+                    <p>{"Scrapes the movies that were screening in English in Budapest, Hungary. So I could go to the movies."}</p>
+                </>
+            }]),
+            x: 67.2, // +1% left
+            y: 10.0,
+            width: 31.6, // -1% left
+            height: 27.3, // -1% bottom
+            buffer: 20.0,
+        },
+        // Cell 4: Placeholder
+        WindowProps {
+            title: AttrValue::from("project/placeholder_1"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <p>{"Future project goes here."}</p>
+            }]),
+            x: 1.0,
+            y: 39.3, // +1% top
+            width: 31.6, // -1% right
+            height: 26.3, // -1% top, -1% bottom
+            buffer: 20.0,
+        },
+        // Cell 5: Tic Tac Toe
+        WindowProps {
+            title: AttrValue::from("project/tictactoe"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <>
+                    <b><a href="https://github.com/gabrielhsc95/tictactoe" target="_blank">{"tictactoe"}</a></b>
+                    <p>{"More than just a Tic Tac Toe, it is binary game engine and Artificial Intelligence."}</p>
+                </>
+            }]),
+            x: 34.6, // +1% left
+            y: 39.3, // +1% top
+            width: 30.6, // -1% left, -1% right
+            height: 26.3, // -1% top, -1% bottom
+            buffer: 20.0,
+        },
+        // Cell 6: Placeholder
+        WindowProps {
+            title: AttrValue::from("project/placeholder_2"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <p>{"Future project goes here."}</p>
+            }]),
+            x: 67.2, // +1% left
+            y: 39.3, // +1% top
+            width: 31.6, // -1% left
+            height: 26.3, // -1% top, -1% bottom
+            buffer: 20.0,
+        },
+        // Cell 7: Mentor XMercury
+        WindowProps {
+            title: AttrValue::from("project/mentor_xmercury"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <>
+                    <b><a href="https://github.com/Giovani-Costa/project_xmercury" target="_blank">{"project_xmercury"}</a></b>
+                    <p>{"Manage a Tabletop RPG game using a discord bot and streamlit app."}</p>
+                </>
+            }]),
+            x: 1.0,
+            y: 67.6, // +1% top
+            width: 31.6, // -1% right
+            height: 27.3, // -1% top
+            buffer: 20.0,
+        },
+        // Cell 8: Mentor XLunar
+        WindowProps {
+            title: AttrValue::from("project/mentor_xlunar"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <>
+                    <b><a href="https://github.com/Giovani-Costa/project_xlunar" target="_blank">{"project_xlunar"}</a></b>
+                    <p>{"Discord bot to help student for standards exams."}</p>
+                </>
+            }]),
+            x: 34.6, // +1% left
+            y: 67.6, // +1% top
+            width: 30.6, // -1% left, -1% right
+            height: 27.3, // -1% top
+            buffer: 20.0,
+        },
+        // Cell 9: Placeholder
+        WindowProps {
+            title: AttrValue::from("project/placeholder_3"),
+            content: yew::html::ChildrenRenderer::new(vec![html! {
+                <p>{"Future project goes here."}</p>
+            }]),
+            x: 67.2, // +1% left
+            y: 67.6, // +1% top
+            width: 31.6, // -1% left
+            height: 27.3, // -1% top
+            buffer: 20.0,
+        },
+    ]
 }
