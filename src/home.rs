@@ -1,5 +1,6 @@
 use yew::prelude::*;
 use crate::window::WindowProps;
+use crate::components::content_loader::ContentLoader;
 
 pub fn get_home_windows() -> Vec<WindowProps> {
     vec![
@@ -156,7 +157,7 @@ pub fn get_home_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("home/greetings"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <p>{"hi"}</p>
+                <ContentLoader url="/text/home/greetings.json" />
             }]),
             x: 67.2,
             y: 67.6,

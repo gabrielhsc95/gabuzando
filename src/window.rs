@@ -36,8 +36,8 @@ pub fn window_widget(props: &WindowProps) -> Html {
     
     let x = use_state(|| props.x);
     let y = use_state(|| props.y);
-    let width = use_state(|| props.width); // Need state for width now
-    let height = use_state(|| props.height); // Need state for height now
+    let width = use_state(|| props.width);
+    let height = use_state(|| props.height);
     
     let is_minimized = use_state(|| false);
     let is_maximized = use_state(|| false);

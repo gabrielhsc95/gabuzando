@@ -5,6 +5,7 @@ use yew::prelude::*;
 
 mod about;
 mod blog;
+mod components;
 mod cv;
 mod footer;
 mod header;
@@ -16,7 +17,6 @@ mod window_manager;
 
 use crate::footer::Footer;
 use crate::header::Header;
-use crate::window::WindowProps;
 use crate::window_manager::{WindowManager, WindowManagerProps};
 
 pub fn get_current_path() -> AttrValue {
