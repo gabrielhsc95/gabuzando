@@ -11,8 +11,8 @@ pub fn get_about_windows() -> Vec<WindowProps> {
             }]),
             x: 1.0,
             y: 10.0,
-            width: 31.6, // -1% right
-            height: 55.6, // -1% bottom
+            width: 31.6,
+            height: 55.6,
             buffer: 20.0,
         },
         // Me
@@ -27,10 +27,10 @@ pub fn get_about_windows() -> Vec<WindowProps> {
                     <p>{"Beyond the world of finance, I am passionate about learning new things. You will often find me at the movies, happily coding personal projects, or immersed in the satisfying click of LEGO bricks."}</p>
                 </>
             }]),
-            x: 34.6, // +1% left
+            x: 34.6,
             y: 10.0,
-            width: 64.2, // -1% left
-            height: 27.3, // -1% bottom (was incorrectly 28.3)
+            width: 64.2,
+            height: 27.3,
             buffer: 20.0,
         },
         // Countries
@@ -44,10 +44,10 @@ pub fn get_about_windows() -> Vec<WindowProps> {
                     <p>{"Visited: 🇦🇷, 🇵🇾, 🇸🇰, 🏴󠁧󠁢󠁥󠁮󠁧󠁿, 🇮🇹, 🇻🇦, 🇵🇹, 🇩🇪, 🇲🇽"}</p>
                 </>
             }]),
-            x: 34.6, // +1% left
-            y: 39.3, // +1% top
-            width: 30.6, // -1% left, -1% right
-            height: 26.3, // -1% top, -1% bottom
+            x: 34.6,
+            y: 39.3,
+            width: 30.6,
+            height: 26.3,
             buffer: 20.0,
         },
         // Contact
@@ -61,10 +61,10 @@ pub fn get_about_windows() -> Vec<WindowProps> {
                     <div class="same-line"><img src="/images/github.png" alt="GitHub" class="contact"/><a href="https://github.com/gabrielhsc95" target="_blank">{"gabrielhsc95"}</a></div>
                 </>
             }]),
-            x: 67.2, // +1% left
-            y: 39.3, // +1% top
-            width: 31.6, // -1% left
-            height: 26.3, // -1% top, -1% bottom
+            x: 67.2,
+            y: 39.3,
+            width: 31.6,
+            height: 26.3,
             buffer: 20.0,
         },
         // Why Gabuzando
@@ -74,9 +74,9 @@ pub fn get_about_windows() -> Vec<WindowProps> {
                 <p>{"My nickname is Gabu, which I playfully turned into a verb. To bring in a touch of my Brazilian roots, I used the gerund form 'gabuzando' instead of a direct English equivalent. So, 'gabuzando' essentially captures the dynamic essence of 'being Gabu,' and this website is where I will share all the random things I'm up to. I am 'gabuzando'."}</p>
             }]),
             x: 1.0,
-            y: 67.6, // +1% top
-            width: 64.2, // -1% right
-            height: 27.3, // -1% top (height was 28.3, so 28.3 - 1 = 27.3)
+            y: 67.6,
+            width: 64.2,
+            height: 27.3,
             buffer: 20.0,
         },
         // Random Quote
@@ -88,10 +88,10 @@ pub fn get_about_windows() -> Vec<WindowProps> {
                     <p class="author">{"Isaac Newton"}</p>
                 </>
             }]),
-            x: 67.2, // +1% left
-            y: 67.6, // +1% top
-            width: 31.6, // -1% left
-            height: 27.3, // -1% top
+            x: 67.2,
+            y: 67.6,
+            width: 31.6,
+            height: 27.3,
             buffer: 20.0,
         },
     ]

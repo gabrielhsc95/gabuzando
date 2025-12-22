@@ -11,8 +11,8 @@ pub fn get_blog_windows() -> Vec<WindowProps> {
             }]),
             x: 1.0,
             y: 10.0,
-            width: 64.2, // -1% right gap
-            height: 84.9, // Full height
+            width: 64.2,
+            height: 84.9,
             buffer: 20.0,
         },
         // History (Cell 3 - Top Right)
@@ -21,10 +21,10 @@ pub fn get_blog_windows() -> Vec<WindowProps> {
             content: yew::html::ChildrenRenderer::new(vec![html! {
                 <p>{"list, order from recent to old, of blog posts."}</p>
             }]),
-            x: 67.2, // +1% left
+            x: 67.2,
             y: 10.0,
-            width: 31.6, // -1% left
-            height: 27.3, // -1% bottom
+            width: 31.6,
+            height: 27.3,
             buffer: 20.0,
         },
         // Best (Cell 6 - Middle Right)
@@ -33,10 +33,10 @@ pub fn get_blog_windows() -> Vec<WindowProps> {
             content: yew::html::ChildrenRenderer::new(vec![html! {
                 <p>{"list, ordered by most likes, of blog posts."}</p>
             }]),
-            x: 67.2, // +1% left
-            y: 39.3, // +1% top
-            width: 31.6, // -1% left
-            height: 26.3, // -1% top, -1% bottom
+            x: 67.2,
+            y: 39.3,
+            width: 31.6,
+            height: 26.3,
             buffer: 20.0,
         },
         // Random (Cell 9 - Bottom Right)
@@ -45,10 +45,10 @@ pub fn get_blog_windows() -> Vec<WindowProps> {
             content: yew::html::ChildrenRenderer::new(vec![html! {
                 <p>{"random blog post title."}</p>
             }]),
-            x: 67.2, // +1% left
-            y: 67.6, // +1% top
-            width: 31.6, // -1% left
-            height: 27.3, // -1% top
+            x: 67.2,
+            y: 67.6,
+            width: 31.6,
+            height: 27.3,
             buffer: 20.0,
         },
     ]

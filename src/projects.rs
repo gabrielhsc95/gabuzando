@@ -14,8 +14,8 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
             }]),
             x: 1.0,
             y: 10.0,
-            width: 31.6, // -1% right
-            height: 27.3, // -1% bottom
+            width: 31.6,
+            height: 27.3,
             buffer: 20.0,
         },
         // Cell 2: Gabuzando
@@ -27,10 +27,10 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
                     <p>{"This website! Built in Rust to showcase my experience and some of my thoughts."}</p>
                 </>
             }]),
-            x: 34.6, // +1% left
+            x: 34.6,
             y: 10.0,
-            width: 30.6, // -1% left, -1% right
-            height: 27.3, // -1% bottom
+            width: 30.6,
+            height: 27.3,
             buffer: 20.0,
         },
         // Cell 3: Cinema City
@@ -39,13 +39,13 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
             content: yew::html::ChildrenRenderer::new(vec![html! {
                 <>
                     <b><a href="https://github.com/gabrielhsc95/cinema-city" target="_blank">{"cinema-city"}</a></b>
-                    <p>{"Scrapes the movies that were screening in English in Budapest, Hungary. So I could go to the movies."}</p>
+                    <p>{"Scrapes the movies that are screening in English in Budapest, Hungary. So I could go to the movies."}</p>
                 </>
             }]),
-            x: 67.2, // +1% left
+            x: 67.2,
             y: 10.0,
-            width: 31.6, // -1% left
-            height: 27.3, // -1% bottom
+            width: 31.6,
+            height: 27.3,
             buffer: 20.0,
         },
         // Cell 4: Placeholder
@@ -55,9 +55,9 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
                 <p>{"Future project goes here."}</p>
             }]),
             x: 1.0,
-            y: 39.3, // +1% top
-            width: 31.6, // -1% right
-            height: 26.3, // -1% top, -1% bottom
+            y: 39.3,
+            width: 31.6,
+            height: 26.3,
             buffer: 20.0,
         },
         // Cell 5: Tic Tac Toe
@@ -69,10 +69,10 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
                     <p>{"More than just a Tic Tac Toe, it is binary game engine and Artificial Intelligence."}</p>
                 </>
             }]),
-            x: 34.6, // +1% left
-            y: 39.3, // +1% top
-            width: 30.6, // -1% left, -1% right
-            height: 26.3, // -1% top, -1% bottom
+            x: 34.6,
+            y: 39.3,
+            width: 30.6,
+            height: 26.3,
             buffer: 20.0,
         },
         // Cell 6: Placeholder
@@ -81,10 +81,10 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
             content: yew::html::ChildrenRenderer::new(vec![html! {
                 <p>{"Future project goes here."}</p>
             }]),
-            x: 67.2, // +1% left
-            y: 39.3, // +1% top
-            width: 31.6, // -1% left
-            height: 26.3, // -1% top, -1% bottom
+            x: 67.2,
+            y: 39.3,
+            width: 31.6,
+            height: 26.3,
             buffer: 20.0,
         },
         // Cell 7: Mentor XMercury
@@ -97,9 +97,9 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
                 </>
             }]),
             x: 1.0,
-            y: 67.6, // +1% top
-            width: 31.6, // -1% right
-            height: 27.3, // -1% top
+            y: 67.6,
+            width: 31.6,
+            height: 27.3,
             buffer: 20.0,
         },
         // Cell 8: Mentor XLunar
@@ -111,10 +111,10 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
                     <p>{"Discord bot to help student for standards exams."}</p>
                 </>
             }]),
-            x: 34.6, // +1% left
-            y: 67.6, // +1% top
-            width: 30.6, // -1% left, -1% right
-            height: 27.3, // -1% top
+            x: 34.6,
+            y: 67.6,
+            width: 30.6,
+            height: 27.3,
             buffer: 20.0,
         },
         // Cell 9: Placeholder
@@ -123,10 +123,10 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
             content: yew::html::ChildrenRenderer::new(vec![html! {
                 <p>{"Future project goes here."}</p>
             }]),
-            x: 67.2, // +1% left
-            y: 67.6, // +1% top
-            width: 31.6, // -1% left
-            height: 27.3, // -1% top
+            x: 67.2,
+            y: 67.6,
+            width: 31.6,
+            height: 27.3,
             buffer: 20.0,
         },
     ]

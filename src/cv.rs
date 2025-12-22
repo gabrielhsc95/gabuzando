@@ -73,8 +73,8 @@ pub fn get_cv_windows() -> Vec<WindowProps> {
             }]),
             x: 1.0,
             y: 10.0,
-            width: 31.6, // -1% right
-            height: 55.6, // -1% bottom
+            width: 31.6,
+            height: 55.6,
             buffer: 20.0,
         },
         // Education (Cells 2, 3 - Top Row, Center+Right)
@@ -116,10 +116,10 @@ pub fn get_cv_windows() -> Vec<WindowProps> {
                     </div>
                 </>
             }]),
-            x: 34.6, // +1% left
+            x: 34.6,
             y: 10.0,
-            width: 64.2, // -1% left
-            height: 27.3, // -1% bottom
+            width: 64.2,
+            height: 27.3,
             buffer: 20.0,
         },
         // Skills (Cells 5, 6 - Middle Row, Center+Right)
@@ -133,10 +133,10 @@ pub fn get_cv_windows() -> Vec<WindowProps> {
                     <p><b>{"Soft Skills"}</b>{": Public Speaking, Teamwork, Leadership, Problem-Solving"}</p>
                 </>
             }]),
-            x: 34.6, // +1% left
-            y: 39.3, // +1% top
-            width: 64.2, // -1% left
-            height: 26.3, // -1% top, -1% bottom
+            x: 34.6,
+            y: 39.3,
+            width: 64.2,
+            height: 26.3,
             buffer: 20.0,
         },
         // Additional Information (Cells 7, 8, 9 - Bottom Row)
@@ -173,9 +173,9 @@ pub fn get_cv_windows() -> Vec<WindowProps> {
                 </>
             }]),
             x: 1.0,
-            y: 67.6, // +1% top
-            width: 97.8, // -1% right (basically full width - buffer)
-            height: 27.3, // -1% top
+            y: 67.6,
+            width: 97.8,
+            height: 27.3,
             buffer: 20.0,
         },
     ]
