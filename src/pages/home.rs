@@ -1,6 +1,61 @@
 use yew::prelude::*;
 use crate::components::window::WindowProps;
-use crate::components::content_loader::ContentLoader;
+
+use gloo_net::http::Request;
+use rand::prelude::*;
+use serde::Deserialize;
+
+#[derive(Deserialize)]
+struct GreetingsList {
+    greetings: Vec<String>,
+}
+
+#[function_component(GreetingsLoader)]
+pub fn greetings_loader() -> Html {
+    let content = use_state(|| None::<String>);
+    let error = use_state(|| None::<String>);
+
+    {
+        let content = content.clone();
+        let error = error.clone();
+
+        use_effect_with((), move |_| {
+            wasm_bindgen_futures::spawn_local(async move {
+                match Request::get("/text/home/greetings.json").send().await {
+                    Ok(resp) => {
+                        if resp.ok() {
+                            match resp.json::<GreetingsList>().await {
+                                Ok(json) => {
+                                    let mut rng = rand::thread_rng();
+                                    if let Some(greeting) = json.greetings.choose(&mut rng) {
+                                        content.set(Some(greeting.clone()));
+                                    } else {
+                                        error.set(Some("No greetings found".to_string()));
+                                    }
+                                }
+                                Err(e) => error.set(Some(format!("Failed to parse JSON: {}", e))),
+                            }
+                        } else {
+                            error.set(Some(format!("Failed to fetch: {}", resp.status_text())));
+                        }
+                    }
+                    Err(e) => error.set(Some(format!("Network error: {}", e))),
+                }
+            });
+            || ()
+        });
+    }
+
+    if let Some(err) = &*error {
+        return html! { <p style="color: red;">{ err }</p> };
+    }
+
+    if let Some(text) = &*content {
+        html! { <p>{ text }</p> }
+    } else {
+        html! { <p>{ "Loading..." }</p> }
+    }
+}
 
 pub fn get_home_windows() -> Vec<WindowProps> {
     vec![
@@ -157,7 +212,7 @@ pub fn get_home_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("home/greetings"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ContentLoader url="/text/home/greetings.json" />
+                <GreetingsLoader />
             }]),
             x: 67.2,
             y: 67.6,
