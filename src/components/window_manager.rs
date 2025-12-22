@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 use yew::prelude::*;
 
-use crate::not_found::PageNotFound;
-use crate::window::{WindowProps, WindowWidget};
+use crate::pages::not_found::PageNotFound;
+use crate::components::window::{WindowProps, WindowWidget};
 
 #[derive(Properties, PartialEq)]
 pub struct WindowManagerProps {

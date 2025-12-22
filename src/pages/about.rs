@@ -1,5 +1,5 @@
 use yew::prelude::*;
-use crate::window::WindowProps;
+use crate::components::window::WindowProps;
 
 pub fn get_about_windows() -> Vec<WindowProps> {
     vec![

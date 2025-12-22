@@ -3,21 +3,13 @@ use std::collections::HashMap;
 use web_sys;
 use yew::prelude::*;
 
-mod about;
-mod blog;
 mod components;
-mod cv;
-mod footer;
-mod header;
-mod home;
-mod not_found;
-mod projects;
-mod window;
-mod window_manager;
+mod pages;
 
-use crate::footer::Footer;
-use crate::header::Header;
-use crate::window_manager::{WindowManager, WindowManagerProps};
+use crate::components::footer::Footer;
+use crate::components::header::Header;
+use crate::components::window_manager::{WindowManager, WindowManagerProps};
+use crate::pages::{about, blog, cv, home, projects};
 
 pub fn get_current_path() -> AttrValue {
     AttrValue::from(

@@ -1,5 +1,5 @@
 use yew::prelude::*;
-use crate::window::WindowProps;
+use crate::components::window::WindowProps;
 use crate::components::content_loader::ContentLoader;
 
 pub fn get_home_windows() -> Vec<WindowProps> {
