@@ -111,3 +111,21 @@ pub struct ProjectItem {
 pub struct ProjectsContent {
     pub projects: Vec<ProjectItem>,
 }
+
+#[derive(Clone, PartialEq, Deserialize)]
+pub struct BlogItem {
+    pub id: String,
+    pub title: String,
+    pub url: String,
+    pub description: String,
+    pub summary: String,
+    pub content: String,
+    pub likes: u32,
+    pub date: String,
+    pub category: String,
+}
+
+#[derive(Clone, PartialEq, Deserialize)]
+pub struct BlogList {
+    pub posts: Vec<BlogItem>,
+}

@@ -6,6 +6,7 @@ use crate::hooks::{use_fetch, FetchState};
 use crate::types::{SimpleTextContent, GreetingsList};
 use crate::pages::cv::ExperienceLoader;
 use crate::pages::projects::ProjectLoader;
+use crate::pages::blog::{BlogLoader, BlogMode};
 
 
 #[function_component(MeLoader)]
@@ -102,7 +103,7 @@ pub fn get_home_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("blog/best"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <p>{"list, ordered by most likes, of blog posts."}</p>
+                <BlogLoader mode={BlogMode::Best} />
             }]),
             x: 67.2,
             y: 39.3,
