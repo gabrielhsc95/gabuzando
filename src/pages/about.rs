@@ -1,5 +1,205 @@
+use gloo_net::http::Request;
+use rand::prelude::*;
+use serde::Deserialize;
 use yew::prelude::*;
 use crate::components::window::WindowProps;
+
+// Structures
+
+
+#[derive(Clone, PartialEq, Deserialize)]
+struct CountriesContent {
+    based: String,
+    from: String,
+    lived: String,
+    visited: String,
+}
+
+#[derive(Clone, PartialEq, Deserialize)]
+struct ContactLink {
+    icon: String,
+    alt: String,
+    text: String,
+    url: String,
+}
+
+#[derive(Clone, PartialEq, Deserialize)]
+struct ContactContent {
+    links: Vec<ContactLink>,
+}
+
+#[derive(Clone, PartialEq, Deserialize)]
+struct SimpleTextContent {
+    text: String,
+}
+
+#[derive(Clone, PartialEq, Deserialize)]
+struct Quote {
+    text: String,
+    author: String,
+}
+
+#[derive(Clone, PartialEq, Deserialize)]
+struct QuotesContent {
+    quotes: Vec<Quote>,
+}
+
+// Loaders
+#[function_component(MeLoader)]
+fn me_loader() -> Html {
+    let content = use_state(|| None::<SimpleTextContent>);
+    {
+        let content = content.clone();
+        use_effect_with((), move |_| {
+            wasm_bindgen_futures::spawn_local(async move {
+                if let Ok(resp) = Request::get("/text/about/me.json").send().await {
+                    if let Ok(json) = resp.json::<SimpleTextContent>().await {
+                        content.set(Some(json));
+                    }
+                }
+            });
+            || ()
+        });
+    }
+
+    if let Some(data) = &*content {
+        let div = web_sys::window()
+            .unwrap()
+            .document()
+            .unwrap()
+            .create_element("div")
+            .unwrap();
+        div.set_inner_html(&data.text);
+
+        html! {
+            <>
+                { Html::VRef(div.into()) }
+            </>
+        }
+    } else {
+        html! { <p>{"Loading..."}</p> }
+    }
+}
+
+#[function_component(CountriesLoader)]
+fn countries_loader() -> Html {
+    let content = use_state(|| None::<CountriesContent>);
+    {
+        let content = content.clone();
+        use_effect_with((), move |_| {
+            wasm_bindgen_futures::spawn_local(async move {
+                if let Ok(resp) = Request::get("/text/about/countries.json").send().await {
+                    if let Ok(json) = resp.json::<CountriesContent>().await {
+                        content.set(Some(json));
+                    }
+                }
+            });
+            || ()
+        });
+    }
+
+    if let Some(data) = &*content {
+        html! {
+            <>
+                <p>{&data.based}</p>
+                <p>{&data.from}</p>
+                <p>{&data.lived}</p>
+                <p>{&data.visited}</p>
+            </>
+        }
+    } else {
+        html! { <p>{"Loading..."}</p> }
+    }
+}
+
+#[function_component(ContactLoader)]
+fn contact_loader() -> Html {
+    let content = use_state(|| None::<ContactContent>);
+    {
+        let content = content.clone();
+        use_effect_with((), move |_| {
+            wasm_bindgen_futures::spawn_local(async move {
+                if let Ok(resp) = Request::get("/text/about/contact.json").send().await {
+                    if let Ok(json) = resp.json::<ContactContent>().await {
+                        content.set(Some(json));
+                    }
+                }
+            });
+            || ()
+        });
+    }
+
+    if let Some(data) = &*content {
+        html! {
+            <>
+                { for data.links.iter().map(|link| html! {
+                    <div class="same-line">
+                        <img src={link.icon.clone()} alt={link.alt.clone()} class="contact"/>
+                        <a href={link.url.clone()} target="_blank">{&link.text}</a>
+                    </div>
+                }) }
+            </>
+        }
+    } else {
+        html! { <p>{"Loading..."}</p> }
+    }
+}
+
+#[function_component(WhyLoader)]
+fn why_loader() -> Html {
+    let content = use_state(|| None::<SimpleTextContent>);
+    {
+        let content = content.clone();
+        use_effect_with((), move |_| {
+            wasm_bindgen_futures::spawn_local(async move {
+                if let Ok(resp) = Request::get("/text/about/why_gabuzando.json").send().await {
+                    if let Ok(json) = resp.json::<SimpleTextContent>().await {
+                        content.set(Some(json));
+                    }
+                }
+            });
+            || ()
+        });
+    }
+
+    if let Some(data) = &*content {
+        html! { <p>{&data.text}</p> }
+    } else {
+        html! { <p>{"Loading..."}</p> }
+    }
+}
+
+#[function_component(QuoteLoader)]
+fn quote_loader() -> Html {
+    let content = use_state(|| None::<Quote>);
+    {
+        let content = content.clone();
+        use_effect_with((), move |_| {
+            wasm_bindgen_futures::spawn_local(async move {
+                if let Ok(resp) = Request::get("/text/about/random_quote.json").send().await {
+                    if let Ok(json) = resp.json::<QuotesContent>().await {
+                        let mut rng = rand::thread_rng();
+                        if let Some(quote) = json.quotes.choose(&mut rng) {
+                            content.set(Some(quote.clone()));
+                        }
+                    }
+                }
+            });
+            || ()
+        });
+    }
+
+    if let Some(data) = &*content {
+        html! {
+            <>
+                <p><q>{&data.text}</q></p>
+                <p class="author">{&data.author}</p>
+            </>
+        }
+    } else {
+        html! { <p>{"Loading..."}</p> }
+    }
+}
 
 pub fn get_about_windows() -> Vec<WindowProps> {
     vec![
@@ -19,13 +219,7 @@ pub fn get_about_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("about/me"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <p>{"I am a software developer, a loving partner, a proud step-dad, and an unapologetic nerd with a dash of delightful weirdness, all fueled by my Brazilian roots. Hailing from "} <a href="https://maps.app.goo.gl/7jXanpdULSnsMbwj7">{"Londrina, Paraná, Brazil"}</a>{", my academic background is in the cosmos. I hold a Masters in Cosmology and Astrophysics."}</p>
-                    <br />
-                    <p>{"Life took a fascinating turn, leading me to the finance industry. I have navigated roles from Financial Engineer (Analytical Quality Assurance) to my current position as a Quantitative Researcher. Ultimately, I see myself as a tool builder, constantly creating and finding solutions."}</p>
-                    <br />
-                    <p>{"Beyond the world of finance, I am passionate about learning new things. You will often find me at the movies, happily coding personal projects, or immersed in the satisfying click of LEGO bricks."}</p>
-                </>
+                <MeLoader />
             }]),
             x: 34.6,
             y: 10.0,
@@ -37,12 +231,7 @@ pub fn get_about_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("about/countries"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <p>{"Based: 🇺🇸"}</p>
-                    <p>{"From: 🇧🇷"}</p>
-                    <p>{"Lived: 🇭🇺, 🇷🇸"}</p>
-                    <p>{"Visited: 🇦🇷, 🇵🇾, 🇸🇰, 🏴󠁧󠁢󠁥󠁮󠁧󠁿, 🇮🇹, 🇻🇦, 🇵🇹, 🇩🇪, 🇲🇽"}</p>
-                </>
+                <CountriesLoader />
             }]),
             x: 34.6,
             y: 39.3,
@@ -54,12 +243,7 @@ pub fn get_about_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("about/contact"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <div class="same-line"><img src="/images/gmail.png" alt="Email" class="contact"/><a href="mailto:gabrielhsc95@gmail.com">{"gabrielhsc95@gmail.com"}</a></div>
-                    <div class="same-line"><img src="/images/instagram.png" alt="Instagram" class="contact"/><a href="https://instagram.com/gabrielhsc95" target="_blank">{"@gabrielhsc95"}</a></div>
-                    <div class="same-line"><img src="/images/linkedin.png" alt="LinkedIn" class="contact"/><a href="https://linkedin.com/in/gabrielhsc95" target="_blank">{"/in/gabrielhsc95"}</a></div>
-                    <div class="same-line"><img src="/images/github.png" alt="GitHub" class="contact"/><a href="https://github.com/gabrielhsc95" target="_blank">{"gabrielhsc95"}</a></div>
-                </>
+                <ContactLoader />
             }]),
             x: 67.2,
             y: 39.3,
@@ -71,7 +255,7 @@ pub fn get_about_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("about/why_gabuzando"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <p>{"My nickname is Gabu, which I playfully turned into a verb. To bring in a touch of my Brazilian roots, I used the gerund form 'gabuzando' instead of a direct English equivalent. So, 'gabuzando' essentially captures the dynamic essence of 'being Gabu,' and this website is where I will share all the random things I'm up to. I am 'gabuzando'."}</p>
+                <WhyLoader />
             }]),
             x: 1.0,
             y: 67.6,
@@ -83,10 +267,7 @@ pub fn get_about_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("about/random_quote"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <p><q>{"If I have seen further than others, it is by standing upon the shoulders of giants."}</q></p>
-                    <p class="author">{"Isaac Newton"}</p>
-                </>
+                <QuoteLoader />
             }]),
             x: 67.2,
             y: 67.6,

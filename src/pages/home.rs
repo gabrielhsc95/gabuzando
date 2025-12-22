@@ -10,6 +10,46 @@ struct GreetingsList {
     greetings: Vec<String>,
 }
 
+#[derive(Deserialize)]
+struct SimpleTextContent {
+    text: String,
+}
+
+#[function_component(MeLoader)]
+fn me_loader() -> Html {
+    let content = use_state(|| None::<SimpleTextContent>);
+    {
+        let content = content.clone();
+        use_effect_with((), move |_| {
+            wasm_bindgen_futures::spawn_local(async move {
+                if let Ok(resp) = Request::get("/text/about/me.json").send().await {
+                    if let Ok(json) = resp.json::<SimpleTextContent>().await {
+                        content.set(Some(json));
+                    }
+                }
+            });
+            || ()
+        });
+    }
+
+    if let Some(data) = &*content {
+        let div = web_sys::window()
+            .unwrap()
+            .document()
+            .unwrap()
+            .create_element("div")
+            .unwrap();
+        div.set_inner_html(&data.text);
+        html! {
+            <>
+                { Html::VRef(div.into()) }
+            </>
+        }
+    } else {
+        html! { <p>{"Loading..."}</p> }
+    }
+}
+
 #[function_component(GreetingsLoader)]
 pub fn greetings_loader() -> Html {
     let content = use_state(|| None::<String>);
@@ -137,13 +177,7 @@ pub fn get_home_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("about/me"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <p>{"I am a software developer, a loving partner, a proud step-dad, and an unapologetic nerd with a dash of delightful weirdness, all fueled by my Brazilian roots. Hailing from "} <a href="https://maps.app.goo.gl/7jXanpdULSnsMbwj7">{"Londrina, Paraná, Brazil"}</a>{", my academic background is in the cosmos. I hold a Masters in Cosmology and Astrophysics."}</p>
-                    <br />
-                    <p>{"Life took a fascinating turn, leading me to the finance industry. I have navigated roles from Financial Engineer (Analytical Quality Assurance) to my current position as a Quantitative Researcher. Ultimately, I see myself as a tool builder, constantly creating and finding solutions."}</p>
-                    <br />
-                    <p>{"Beyond the world of finance, I am passionate about learning new things. You will often find me at the movies, happily coding personal projects, or immersed in the satisfying click of LEGO bricks."}</p>
-                </>
+                <MeLoader />
             }]),
             x: 34.6,
             y: 10.0,
