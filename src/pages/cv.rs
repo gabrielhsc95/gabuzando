@@ -1,5 +1,96 @@
 use yew::prelude::*;
 use crate::components::window::WindowProps;
+use crate::components::loading::Loading;
+use crate::hooks::{use_fetch, FetchState};
+use crate::types::{ExperienceContent, EducationContent, SkillsContent, AdditionalInfoContent};
+
+#[function_component(ExperienceLoader)]
+pub fn experience_loader() -> Html {
+    let fetch_state = use_fetch::<ExperienceContent>("/text/cv/experience.json");
+
+    match fetch_state {
+        FetchState::Success(data) => html! {
+            <>
+                { for data.jobs.iter().map(|job| html! {
+                    <div class="cv-item">
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <div><b>{&job.title}</b></div>
+                            <div>{&job.dates}</div>
+                        </div>
+                        <p><i>{&job.company}</i></p>
+                        <p>{&job.location}</p>
+                        <ul>
+                            { for job.items.iter().map(|item| html! { <li>{item}</li> }) }
+                        </ul>
+                    </div>
+                }) }
+            </>
+        },
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
+    }
+}
+
+#[function_component(EducationLoader)]
+fn education_loader() -> Html {
+    let fetch_state = use_fetch::<EducationContent>("/text/cv/education.json");
+
+    match fetch_state {
+        FetchState::Success(data) => html! {
+            <>
+                { for data.items.iter().map(|item| html! {
+                    <div class="cv-item">
+                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            <div><b>{&item.degree}</b></div>
+                            <div>{&item.dates}</div>
+                        </div>
+                        <p><i>{&item.institution}</i></p>
+                        <p>{&item.location}</p>
+                    </div>
+                }) }
+            </>
+        },
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
+    }
+}
+
+#[function_component(SkillsLoader)]
+fn skills_loader() -> Html {
+    let fetch_state = use_fetch::<SkillsContent>("/text/cv/skills.json");
+
+    match fetch_state {
+        FetchState::Success(data) => html! {
+            <>
+                { for data.skills.iter().map(|skill| html! {
+                    <p><b>{&skill.category}</b>{&skill.text}</p>
+                }) }
+            </>
+        },
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
+    }
+}
+
+#[function_component(AdditionalInfoLoader)]
+fn additional_info_loader() -> Html {
+    let fetch_state = use_fetch::<AdditionalInfoContent>("/text/cv/additional_info.json");
+
+    match fetch_state {
+        FetchState::Success(data) => html! {
+            <>
+                { for data.sections.iter().map(|section| html! {
+                    <div>
+                        <b>{&section.title}</b>
+                        { for section.items.iter().map(|item| html! { <p>{item}</p> }) }
+                    </div>
+                }) }
+            </>
+        },
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
+    }
+}
 
 pub fn get_cv_windows() -> Vec<WindowProps> {
     vec![
@@ -7,69 +98,7 @@ pub fn get_cv_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("cv/experience"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Quantitative Researcher (Senior Associate)"}</b></div>
-                            <div>{"Aug. 2024 – Present"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Norman, Oklahoma, United States"}</p>
-                        <ul>
-                            <li>{"Developed an AI financial analyst agent, focusing on named entity recognition and validation."}</li>
-                            <li>{"Participated in research discussions to enhance agent capabilities using various LLM models."}</li>
-                            <li>{"Understood client engagement to improve on pain points."}</li>
-                        </ul>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Financial Engineer (Senior Associate)"}</b></div>
-                            <div>{"Jan. 2024 - Jul. 2024"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Norman, Oklahoma, United States"}</p>
-                        <ul>
-                            <li>{"Teach Led in Testing, empowering 4 people to implement new features to an automated testing software"}</li>
-                            <li>{"Managed the testing side implementation of two new pricing models."}</li>
-                        </ul>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Financial Engineer (Associate)"}</b></div>
-                            <div>{"Jan. 2023 - Dec. 2023"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Norman, Oklahoma, United States"}</p>
-                        <ul>
-                            <li>{"Analytical Quality Assurance for financial factor models."}</li>
-                            <li>{"Developed and reviewed financial building blocks libraries to facilitate the replication of financial models."}</li>
-                        </ul>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Financial Engineer (Analyst)"}</b></div>
-                            <div>{"Jun. 2021 - Dec. 2022"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Norman, Oklahoma, United States and Budapest, Hungary"}</p>
-                        <ul>
-                            <li>{"Built an automated testing software for a financial pricing analytics library, and integrated it to the build pipeline."}</li>
-                            <li>{"Developed two financial models to estimate financed emissions in accordance with PCAF."}</li>
-                        </ul>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Financial Engineer (Intern)"}</b></div>
-                            <div>{"Sep. 2020 - Jun. 2021"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Budapest, Hungary"}</p>
-                        <ul>
-                            <li>{"Analytical Quality Assurance for a financial pricing analytics library."}</li>
-                            <li>{"Engage with developer and research about new features and bugs."}</li>
-                        </ul>
-                    </div>
-                </>
+                <ExperienceLoader />
             }]),
             x: 1.0,
             y: 10.0,
@@ -81,40 +110,7 @@ pub fn get_cv_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("cv/education"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                     <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Physics (MSc)"}</b></div>
-                            <div>{"Sep. 2018 – Jun. 2020"}</div>
-                        </div>
-                        <p><i>{"Eötvös Loránd Tudományegyetem (ELTE)"}</i></p>
-                        <p>{"Budapest, Hungary"}</p>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Physics (BSc)"}</b></div>
-                            <div>{"Feb. 2012 – Mar. 2017"}</div>
-                        </div>
-                        <p><i>{"Universidade Estadual de Londrina (UEL)"}</i></p>
-                        <p>{"Londrina, Paraná, Brazil"}</p>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Physics (BSc)"}</b></div>
-                            <div>{"Aug. 2014 – May. 2015"}</div>
-                        </div>
-                        <p><i>{"Xavier University (XU)"}</i></p>
-                        <p>{"Cincinnati, Ohio, United States"}</p>
-                    </div>
-                     <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Electromechanics (Technical Course)"}</b></div>
-                            <div>{"Feb. 2010 – Dec. 2011"}</div>
-                        </div>
-                        <p><i>{"Serviço Nacional de Aprendizagem Industrial (SENAI)"}</i></p>
-                        <p>{"Londrina, Paraná, Brazil"}</p>
-                    </div>
-                </>
+                <EducationLoader />
             }]),
             x: 34.6,
             y: 10.0,
@@ -126,12 +122,7 @@ pub fn get_cv_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("cv/skills"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <p><b>{"Languages"}</b>{": Native Portuguese, Advanced English, Intermediate Spanish"}</p>
-                    <p><b>{"Programming languages"}</b>{": Rust (leptos, clap, derive_more, serde), Python (pandas, numpy, Django, FastAPI, LangChain, LangGraph, Pydantic), Matlab, Mathematica, C, C++, Java"}</p>
-                    <p><b>{"Tools"}</b>{": Microsoft Office, Image Editing, Audio Editing, Video Editing"}</p>
-                    <p><b>{"Soft Skills"}</b>{": Public Speaking, Teamwork, Leadership, Problem-Solving"}</p>
-                </>
+                <SkillsLoader />
             }]),
             x: 34.6,
             y: 39.3,
@@ -143,34 +134,7 @@ pub fn get_cv_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("cv/additional_information"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <div>
-                        <b>{"Volunteering"}</b>
-                        <p>{"Teaching programming for a countryside kid since 2022."}</p>
-                        <p>{"Taught Mathematics to countryside kids in Brazil during the COVID-19 pandemic (2021)."}</p>
-                        <p>{"stuff"}</p>
-                    </div>
-                    <div>
-                        <b>{"Awards"}</b>
-                        <p>{"Best Student in the Electromechanics Program, 2011"}</p>
-                        <p>{"Bronze Medal in the Brazilian Olympics of Astronomy and Astronautics, 2009"}</p>
-                        <p>{"Honorable Mention in the Brazilian Olympics of Mathematics for Public Schools, 2007"}</p>
-                    </div>
-                    <div>
-                        <b>{"Seminars"}</b>
-                        <p>{"Presented Introduction to Cosmic Topology, Londrina-PR, Brazil, 2016"}</p>
-                        <p>{"Presented Physics of Boomerang, Londrina-PR, Brazil, 2013"}</p>
-                        <p>{"Attended IV Jayme Tiomno School of Cosmology at National Observatory, Rio de Janeiro-RJ, Brazil, 2016"}</p>
-                        <p>{"Attended Physics Week at the State University of Londrina XVI (2011), XVII (2012), XVIII (2013), XX (2015), and XXI (2016)"}</p>
-                    </div>
-                    <div>
-                        <b>{"Certifications"}</b>
-                        <p>{"Stipendium Hungaricum by Tempus Public Foundation between Sep. 2018 – Jul. 2020"}</p>
-                        <p>{"Tutorial Education Program (PET) by the Brazilian Ministry of Education (MEC) between Mar. 2013 – Mar. 2014  and Oct. 2015 – Mar. 2017"}</p>
-                        <p>{"Science Without Borders by Coordination for the Improvement of Higher Education Personnel (CAPES) and National Council for Scientific and Technological Development (CNPq) between Aug. 2014 – May 2015"}</p>
-                        <p>{"FIEP Scholarship by Federation of Industries of Paraná State (FIEP) between  Feb. 2010 – Dec. 2011"}</p>
-                    </div>
-                </>
+                <AdditionalInfoLoader />
             }]),
             x: 1.0,
             y: 67.6,

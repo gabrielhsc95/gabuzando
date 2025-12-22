@@ -4,6 +4,8 @@ use rand::prelude::*;
 use crate::components::loading::Loading;
 use crate::hooks::{use_fetch, FetchState};
 use crate::types::{SimpleTextContent, GreetingsList};
+use crate::pages::cv::ExperienceLoader;
+use crate::pages::projects::ProjectLoader;
 
 
 #[function_component(MeLoader)]
@@ -64,69 +66,7 @@ pub fn get_home_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("cv/experience"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Quantitative Researcher (Senior Associate)"}</b></div>
-                            <div>{"Aug. 2024 – Present"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Norman, Oklahoma, United States"}</p>
-                        <ul>
-                            <li>{"Developed an AI financial analyst agent, focusing on named entity recognition and validation."}</li>
-                            <li>{"Participated in research discussions to enhance agent capabilities using various LLM models."}</li>
-                            <li>{"Understood client engagement to improve on pain points."}</li>
-                        </ul>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Financial Engineer (Senior Associate)"}</b></div>
-                            <div>{"Jan. 2024 - Jul. 2024"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Norman, Oklahoma, United States"}</p>
-                        <ul>
-                            <li>{"Teach Led in Testing, empowering 4 people to implement new features to an automated testing software"}</li>
-                            <li>{"Managed the testing side implementation of two new pricing models."}</li>
-                        </ul>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Financial Engineer (Associate)"}</b></div>
-                            <div>{"Jan. 2023 - Dec. 2023"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Norman, Oklahoma, United States"}</p>
-                        <ul>
-                            <li>{"Analytical Quality Assurance for financial factor models."}</li>
-                            <li>{"Developed and reviewed financial building blocks libraries to facilitate the replication of financial models."}</li>
-                        </ul>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Financial Engineer (Analyst)"}</b></div>
-                            <div>{"Jun. 2021 - Dec. 2022"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Norman, Oklahoma, United States and Budapest, Hungary"}</p>
-                        <ul>
-                            <li>{"Built an automated testing software for a financial pricing analytics library, and integrated it to the build pipeline."}</li>
-                            <li>{"Developed two financial models to estimate financed emissions in accordance with PCAF."}</li>
-                        </ul>
-                    </div>
-                    <div class="cv-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{"Financial Engineer (Intern)"}</b></div>
-                            <div>{"Sep. 2020 - Jun. 2021"}</div>
-                        </div>
-                        <p><i>{"MSCI"}</i></p>
-                        <p>{"Budapest, Hungary"}</p>
-                        <ul>
-                            <li>{"Analytical Quality Assurance for a financial pricing analytics library."}</li>
-                            <li>{"Engage with developer and research about new features and bugs."}</li>
-                        </ul>
-                    </div>
-                </>
+                <ExperienceLoader />
             }]),
             x: 1.0,
             y: 10.0,
@@ -150,10 +90,7 @@ pub fn get_home_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("project/tictactoe"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <b><a href="https://github.com/gabrielhsc95/tictactoe" target="_blank">{"tictactoe"}</a></b>
-                    <p>{"More than just a Tic Tac Toe, it is binary game engine and Artificial Intelligence."}</p>
-                </>
+                <ProjectLoader id="tictactoe" />
             }]),
             x: 34.6,
             y: 39.3,
@@ -177,10 +114,7 @@ pub fn get_home_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("project/mentor_xmercury"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <b><a href="https://github.com/Giovani-Costa/project_xmercury" target="_blank">{"project_xmercury"}</a></b>
-                    <p>{"Manage a Tabletop RPG game using a discord bot and streamlit app."}</p>
-                </>
+                <ProjectLoader id="mentor_xmercury" />
             }]),
             x: 1.0,
             y: 67.6,
@@ -192,10 +126,7 @@ pub fn get_home_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("project/mentor_xlunar"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <>
-                    <b><a href="https://github.com/Giovani-Costa/project_xlunar" target="_blank">{"project_xlunar"}</a></b>
-                    <p>{"Discord bot to help student for standards exams."}</p>
-                </>
+                <ProjectLoader id="mentor_xlunar" />
             }]),
             x: 34.6,
             y: 67.6,
