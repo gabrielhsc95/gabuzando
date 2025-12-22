@@ -6,10 +6,12 @@ pub struct WindowProps {
     pub title: AttrValue,
     #[prop_or_default]
     pub content: Children,
-    pub x: i32,
-    pub y: i32,
-    pub width: i32,
-    pub height: i32,
+    pub x: f64,
+    pub y: f64,
+    pub width: f64,
+    pub height: f64,
+    #[prop_or(10.0)]
+    pub buffer: f64,
 }
 
 #[function_component(WindowWidget)]
@@ -66,16 +68,63 @@ pub fn window_widget(props: &WindowProps) -> Html {
         // Clone x and y again for use in the closure.
         let x_for_closure = x.clone();
         let y_for_closure = y.clone();
+        let is_minimized = is_minimized.clone();
+        let buffer = props.buffer;
+        let props_width = props.width;
+        let props_height = props.height;
+        
         Callback::from(move |e: PointerEvent| {
             if let Some((initial_x, initial_y)) = *drag {
                 let mouse_x = e.client_x();
                 let mouse_y = e.client_y();
-                let delta_x = mouse_x - initial_x;
-                let delta_y = mouse_y - initial_y;
-                drag.set(Some((mouse_x, mouse_y)));
-                // Use the cloned state handles
-                x_for_closure.set(*current_x + delta_x);
-                y_for_closure.set(*current_y + delta_y);
+                let delta_x_px = mouse_x - initial_x;
+                let delta_y_px = mouse_y - initial_y;
+                
+                if let Some(window) = web_sys::window() {
+                    if let (Ok(inner_width), Ok(inner_height)) = (window.inner_width(), window.inner_height()) {
+                         if let (Some(width_px), Some(height_px)) = (inner_width.as_f64(), inner_height.as_f64()) {
+                            let delta_x_p = (delta_x_px as f64 / width_px) * 100.0;
+                            let delta_y_p = (delta_y_px as f64 / height_px) * 100.0;
+                            
+                            let mut new_x = *current_x + delta_x_p;
+                            let mut new_y = *current_y + delta_y_p;
+
+                            // Constraints
+                            let buffer_px = buffer;
+                            let header_h_px = 85.0;
+                            let footer_h_px = 30.0;
+                            
+                            // Calculate buffer in % based on current viewport dimensions
+                            let buffer_x_p = (buffer_px / width_px) * 100.0;
+                            let buffer_y_p = (buffer_px / height_px) * 100.0;
+
+                            // Calculate current dimensions in %
+                            let current_w_p = if *is_minimized { 15.0 } else { props_width };
+                            let current_h_p = if *is_minimized { 
+                                (37.0 / height_px) * 100.0 
+                            } else { 
+                                props_height 
+                            };
+
+                            let min_x = buffer_x_p;
+                            let max_x = 100.0 - buffer_x_p - current_w_p;
+                            
+                            let min_y = (header_h_px / height_px * 100.0) + buffer_y_p;
+                            let max_y = 100.0 - (footer_h_px / height_px * 100.0) - buffer_y_p - current_h_p;
+
+                            // Clamp
+                            if new_x < min_x { new_x = min_x; }
+                            if new_x > max_x { new_x = max_x; }
+                            if new_y < min_y { new_y = min_y; }
+                            if new_y > max_y { new_y = max_y; }
+
+                            drag.set(Some((mouse_x, mouse_y)));
+                            // Use the cloned state handles
+                            x_for_closure.set(new_x);
+                            y_for_closure.set(new_y);
+                         } 
+                    }
+                }
             }
         })
     };
@@ -97,7 +146,7 @@ pub fn window_widget(props: &WindowProps) -> Html {
     let width_style = if *is_maximized {
         "98%".to_string()
     } else {
-        format!("{}px", props.width)
+        format!("{}%", is_minimized.then(|| 15.0).unwrap_or(props.width))
     };
 
     let height_style = if *is_minimized {
@@ -105,21 +154,21 @@ pub fn window_widget(props: &WindowProps) -> Html {
     } else if *is_maximized {
         "87%".to_string()
     } else {
-        format!("{}px", props.height)
+        format!("{}%", props.height)
     };
 
     let display_style = if *is_opened { "flex" } else { "none" };
 
     let top_style = if *is_maximized {
-        "110px".to_string()
+        "10%".to_string() // Rough estimate for top bar spacing in % or specific px if needed, sticking to % as requested
     } else {
-        format!("{}px", *y)
+        format!("{}%", *y)
     };
 
     let left_style = if *is_maximized {
-        "10px".to_string()
+        "1%".to_string()
     } else {
-        format!("{}px", *x)
+        format!("{}%", *x)
     };
 
     let z_index_style = if drag.is_some() || *is_maximized {
@@ -168,7 +217,13 @@ pub fn window_widget(props: &WindowProps) -> Html {
                     </div>
                 </div>
                 <div class="window-content">
-                     { for props.content.iter() }
+                     {
+                        if !*is_minimized {
+                            html! { for props.content.iter() }
+                        } else {
+                            html! {}
+                        }
+                     }
                 </div>
             </div>
             <style>

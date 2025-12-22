@@ -40,22 +40,43 @@ pub fn app() -> Html {
                 AttrValue::from("/"),
                 vec![WindowProps {
                     title: AttrValue::from("Home"),
-                    content: todo!(),
-                    x: 30,
-                    y: 110,
-                    width: 810,
-                    height: 1110,
+                    content: yew::html::ChildrenRenderer::new(vec![html! {
+                        <div>
+                            <h2>{"Home"}</h2>
+                            <p>{"This is your desktop home. Feel free to drag this window around!"}</p>
+                            <ul>
+                                <li>{"Rust version: 1.75+"}</li>
+                                <li>{"Framework: Yew"}</li>
+                            </ul>
+                        </div>
+                    }]),
+
+                    x: 2.0,
+                    y: 12.0,
+                    width: 42.0,
+                    height: 80.0,
+                    buffer: 20.0,
                 }],
             ),
             (
                 AttrValue::from("/about"),
                 vec![WindowProps {
                     title: AttrValue::from("About"),
-                    content: todo!(),
-                    x: 30,
-                    y: 110,
-                    width: 810,
-                    height: 1110,
+                    content: yew::html::ChildrenRenderer::new(vec![html! {
+                        <div>
+                            <h2>{"About"}</h2>
+                            <p>{"asdasdsad"}</p>
+                            <ul>
+                                <li>{"sdfgsdfg"}</li>
+                                <li>{"sdfghgdfsg"}</li>
+                            </ul>
+                        </div>
+                    }]),
+                    x: 26.0,
+                    y: 10.0,
+                    width: 26.0,
+                    height: 46.0,
+                    buffer: 20.0,
                 }],
             ),
         ]),
