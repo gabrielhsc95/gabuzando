@@ -1,136 +1,55 @@
-use gloo_net::http::Request;
 use rand::prelude::*;
-use serde::Deserialize;
 use yew::prelude::*;
 use crate::components::window::WindowProps;
-
-// Structures
-
-
-#[derive(Clone, PartialEq, Deserialize)]
-struct CountriesContent {
-    based: String,
-    from: String,
-    lived: String,
-    visited: String,
-}
-
-#[derive(Clone, PartialEq, Deserialize)]
-struct ContactLink {
-    icon: String,
-    alt: String,
-    text: String,
-    url: String,
-}
-
-#[derive(Clone, PartialEq, Deserialize)]
-struct ContactContent {
-    links: Vec<ContactLink>,
-}
-
-#[derive(Clone, PartialEq, Deserialize)]
-struct SimpleTextContent {
-    text: String,
-}
-
-#[derive(Clone, PartialEq, Deserialize)]
-struct Quote {
-    text: String,
-    author: String,
-}
-
-#[derive(Clone, PartialEq, Deserialize)]
-struct QuotesContent {
-    quotes: Vec<Quote>,
-}
+use crate::components::loading::Loading;
+use crate::hooks::{use_fetch, FetchState};
+use crate::types::{SimpleTextContent, CountriesContent, ContactContent, QuotesContent, Quote};
 
 // Loaders
 #[function_component(MeLoader)]
 fn me_loader() -> Html {
-    let content = use_state(|| None::<SimpleTextContent>);
-    {
-        let content = content.clone();
-        use_effect_with((), move |_| {
-            wasm_bindgen_futures::spawn_local(async move {
-                if let Ok(resp) = Request::get("/text/about/me.json").send().await {
-                    if let Ok(json) = resp.json::<SimpleTextContent>().await {
-                        content.set(Some(json));
-                    }
-                }
-            });
-            || ()
-        });
-    }
+    let fetch_state = use_fetch::<SimpleTextContent>("/text/about/me.json");
 
-    if let Some(data) = &*content {
-        let div = web_sys::window()
-            .unwrap()
-            .document()
-            .unwrap()
-            .create_element("div")
-            .unwrap();
-        div.set_inner_html(&data.text);
-
-        html! {
-            <>
-                { Html::VRef(div.into()) }
-            </>
+    match fetch_state {
+        FetchState::Success(data) => {
+            let div = web_sys::window()
+                .unwrap()
+                .document()
+                .unwrap()
+                .create_element("div")
+                .unwrap();
+            div.set_inner_html(&data.text);
+            html! { Html::VRef(div.into()) }
         }
-    } else {
-        html! { <p>{"Loading..."}</p> }
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
     }
 }
 
 #[function_component(CountriesLoader)]
 fn countries_loader() -> Html {
-    let content = use_state(|| None::<CountriesContent>);
-    {
-        let content = content.clone();
-        use_effect_with((), move |_| {
-            wasm_bindgen_futures::spawn_local(async move {
-                if let Ok(resp) = Request::get("/text/about/countries.json").send().await {
-                    if let Ok(json) = resp.json::<CountriesContent>().await {
-                        content.set(Some(json));
-                    }
-                }
-            });
-            || ()
-        });
-    }
+    let fetch_state = use_fetch::<CountriesContent>("/text/about/countries.json");
 
-    if let Some(data) = &*content {
-        html! {
+    match fetch_state {
+        FetchState::Success(data) => html! {
             <>
                 <p>{&data.based}</p>
                 <p>{&data.from}</p>
                 <p>{&data.lived}</p>
                 <p>{&data.visited}</p>
             </>
-        }
-    } else {
-        html! { <p>{"Loading..."}</p> }
+        },
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
     }
 }
 
 #[function_component(ContactLoader)]
 fn contact_loader() -> Html {
-    let content = use_state(|| None::<ContactContent>);
-    {
-        let content = content.clone();
-        use_effect_with((), move |_| {
-            wasm_bindgen_futures::spawn_local(async move {
-                if let Ok(resp) = Request::get("/text/about/contact.json").send().await {
-                    if let Ok(json) = resp.json::<ContactContent>().await {
-                        content.set(Some(json));
-                    }
-                }
-            });
-            || ()
-        });
-    }
+    let fetch_state = use_fetch::<ContactContent>("/text/about/contact.json");
 
-    if let Some(data) = &*content {
-        html! {
+    match fetch_state {
+        FetchState::Success(data) => html! {
             <>
                 { for data.links.iter().map(|link| html! {
                     <div class="same-line">
@@ -139,67 +58,62 @@ fn contact_loader() -> Html {
                     </div>
                 }) }
             </>
-        }
-    } else {
-        html! { <p>{"Loading..."}</p> }
+        },
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
     }
 }
 
 #[function_component(WhyLoader)]
 fn why_loader() -> Html {
-    let content = use_state(|| None::<SimpleTextContent>);
-    {
-        let content = content.clone();
-        use_effect_with((), move |_| {
-            wasm_bindgen_futures::spawn_local(async move {
-                if let Ok(resp) = Request::get("/text/about/why_gabuzando.json").send().await {
-                    if let Ok(json) = resp.json::<SimpleTextContent>().await {
-                        content.set(Some(json));
-                    }
-                }
-            });
-            || ()
-        });
-    }
+    let fetch_state = use_fetch::<SimpleTextContent>("/text/about/why_gabuzando.json");
 
-    if let Some(data) = &*content {
-        html! { <p>{&data.text}</p> }
-    } else {
-        html! { <p>{"Loading..."}</p> }
+    match fetch_state {
+        FetchState::Success(data) => html! { <p>{&data.text}</p> },
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
     }
 }
 
 #[function_component(QuoteLoader)]
 fn quote_loader() -> Html {
-    let content = use_state(|| None::<Quote>);
+    let fetch_state = use_fetch::<QuotesContent>("/text/about/random_quote.json");
+    let quote = use_state(|| None::<Quote>);
+
     {
-        let content = content.clone();
-        use_effect_with((), move |_| {
-            wasm_bindgen_futures::spawn_local(async move {
-                if let Ok(resp) = Request::get("/text/about/random_quote.json").send().await {
-                    if let Ok(json) = resp.json::<QuotesContent>().await {
-                        let mut rng = rand::thread_rng();
-                        if let Some(quote) = json.quotes.choose(&mut rng) {
-                            content.set(Some(quote.clone()));
-                        }
-                    }
+        let quote = quote.clone();
+        let fetch_state = fetch_state.clone();
+        use_effect_with(fetch_state, move |state| {
+            if let FetchState::Success(data) = state {
+                // Only set if not already set, to avoid re-randomizing (optional, but good for stability)
+                // Or if we want to ensure it's set when data arrives
+                let mut rng = rand::thread_rng();
+                if let Some(q) = data.quotes.choose(&mut rng) {
+                    quote.set(Some(q.clone()));
                 }
-            });
+            }
             || ()
         });
     }
-
-    if let Some(data) = &*content {
-        html! {
-            <>
-                <p><q>{&data.text}</q></p>
-                <p class="author">{&data.author}</p>
-            </>
-        }
-    } else {
-        html! { <p>{"Loading..."}</p> }
+    
+    match fetch_state {
+        FetchState::Success(_) => {
+            if let Some(quote) = &*quote {
+                 html! {
+                    <>
+                        <p><q>{&quote.text}</q></p>
+                        <p class="author">{&quote.author}</p>
+                    </>
+                }
+            } else {
+                 html! { <Loading /> }
+            }
+        },
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
     }
 }
+
 
 pub fn get_about_windows() -> Vec<WindowProps> {
     vec![

@@ -5,6 +5,8 @@ use yew::prelude::*;
 
 mod components;
 mod pages;
+mod types;
+mod hooks;
 
 use crate::components::footer::Footer;
 use crate::components::header::Header;

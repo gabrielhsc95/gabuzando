@@ -1,99 +1,60 @@
 use yew::prelude::*;
 use crate::components::window::WindowProps;
-
-use gloo_net::http::Request;
 use rand::prelude::*;
-use serde::Deserialize;
+use crate::components::loading::Loading;
+use crate::hooks::{use_fetch, FetchState};
+use crate::types::{SimpleTextContent, GreetingsList};
 
-#[derive(Deserialize)]
-struct GreetingsList {
-    greetings: Vec<String>,
-}
-
-#[derive(Deserialize)]
-struct SimpleTextContent {
-    text: String,
-}
 
 #[function_component(MeLoader)]
 fn me_loader() -> Html {
-    let content = use_state(|| None::<SimpleTextContent>);
-    {
-        let content = content.clone();
-        use_effect_with((), move |_| {
-            wasm_bindgen_futures::spawn_local(async move {
-                if let Ok(resp) = Request::get("/text/about/me.json").send().await {
-                    if let Ok(json) = resp.json::<SimpleTextContent>().await {
-                        content.set(Some(json));
-                    }
-                }
-            });
-            || ()
-        });
-    }
+    let fetch_state = use_fetch::<SimpleTextContent>("/text/about/me.json");
 
-    if let Some(data) = &*content {
-        let div = web_sys::window()
-            .unwrap()
-            .document()
-            .unwrap()
-            .create_element("div")
-            .unwrap();
-        div.set_inner_html(&data.text);
-        html! {
-            <>
-                { Html::VRef(div.into()) }
-            </>
+    match fetch_state {
+        FetchState::Success(data) => {
+            let div = web_sys::window()
+                .unwrap()
+                .document()
+                .unwrap()
+                .create_element("div")
+                .unwrap();
+            div.set_inner_html(&data.text);
+            html! { Html::VRef(div.into()) }
         }
-    } else {
-        html! { <p>{"Loading..."}</p> }
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
     }
 }
 
 #[function_component(GreetingsLoader)]
 pub fn greetings_loader() -> Html {
-    let content = use_state(|| None::<String>);
-    let error = use_state(|| None::<String>);
+    let fetch_state = use_fetch::<GreetingsList>("/text/home/greetings.json");
+    let greeting = use_state(|| None::<String>);
 
     {
-        let content = content.clone();
-        let error = error.clone();
-
-        use_effect_with((), move |_| {
-            wasm_bindgen_futures::spawn_local(async move {
-                match Request::get("/text/home/greetings.json").send().await {
-                    Ok(resp) => {
-                        if resp.ok() {
-                            match resp.json::<GreetingsList>().await {
-                                Ok(json) => {
-                                    let mut rng = rand::thread_rng();
-                                    if let Some(greeting) = json.greetings.choose(&mut rng) {
-                                        content.set(Some(greeting.clone()));
-                                    } else {
-                                        error.set(Some("No greetings found".to_string()));
-                                    }
-                                }
-                                Err(e) => error.set(Some(format!("Failed to parse JSON: {}", e))),
-                            }
-                        } else {
-                            error.set(Some(format!("Failed to fetch: {}", resp.status_text())));
-                        }
-                    }
-                    Err(e) => error.set(Some(format!("Network error: {}", e))),
-                }
-            });
+        let greeting = greeting.clone();
+        let fetch_state = fetch_state.clone();
+        use_effect_with(fetch_state, move |state| {
+            if let FetchState::Success(data) = state {
+                 let mut rng = rand::thread_rng();
+                 if let Some(g) = data.greetings.choose(&mut rng) {
+                     greeting.set(Some(g.clone()));
+                 }
+            }
             || ()
         });
     }
 
-    if let Some(err) = &*error {
-        return html! { <p style="color: red;">{ err }</p> };
-    }
-
-    if let Some(text) = &*content {
-        html! { <p>{ text }</p> }
-    } else {
-        html! { <p>{ "Loading..." }</p> }
+    match fetch_state {
+        FetchState::Success(_) => {
+            if let Some(text) = &*greeting {
+                html! { <p>{ text }</p> }
+            } else {
+                html! { <Loading /> }
+            }
+        },
+        FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
+        _ => html! { <Loading /> },
     }
 }
 
