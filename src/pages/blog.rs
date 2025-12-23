@@ -1,4 +1,5 @@
 use yew::prelude::*;
+use crate::components::language_context::use_language;
 use crate::components::window::WindowProps;
 use crate::components::loading::Loading;
 use crate::hooks::{use_fetch, FetchState};
@@ -21,6 +22,7 @@ pub struct BlogLoaderProps {
 #[function_component(BlogLoader)]
 pub fn blog_loader(props: &BlogLoaderProps) -> Html {
     let fetch_state = use_fetch::<BlogList>("/text/blog/posts.json");
+    let language = use_language().language;
     let mode = props.mode.clone();
 
     match fetch_state {
@@ -39,12 +41,12 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
                              .unwrap()
                              .create_element("div")
                              .unwrap();
-                         div.set_inner_html(&post.content);
+                         div.set_inner_html(post.content.get(language));
                          let _ = div.set_attribute("style", "display: flex; flex-direction: column; gap: 1em; line-height: 1.6;");
 
                          html! {
                              <>
-                                 <h2 style="margin-bottom: 0;">{&post.title}</h2>
+                                 <h2 style="margin-bottom: 0;">{ post.title.get(language) }</h2>
                                  <p style="font-size: 0.8em; color: #666; margin-top: 0.2rem; margin-bottom: 2rem;">{&post.date}{" | Likes: "}{&post.likes}</p>
                                  { Html::VRef(div.into()) }
                              </>
@@ -59,7 +61,7 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
                          <ul>
                              { for posts.iter().map(|post| html! {
                                  <li>
-                                     <a href={post.url.clone()} target="_blank">{&post.title}</a>
+                                     <a href={post.url.clone()} target="_blank">{ post.title.get(language) }</a>
                                      <span style="font-size: 0.8em; color: #666;">{format!(" ({})", post.date)}</span>
                                  </li>
                              }) }
@@ -73,7 +75,7 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
                          <ul>
                              { for posts.iter().take(5).map(|post| html! {
                                  <li>
-                                     <a href={post.url.clone()} target="_blank">{&post.title}</a>
+                                     <a href={post.url.clone()} target="_blank">{ post.title.get(language) }</a>
                                      <span style="font-size: 0.8em; color: #666;">{format!(" ({} likes)", post.likes)}</span>
                                  </li>
                              }) }
@@ -86,8 +88,8 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
                          html! {
                              <>
                                  <b>{"Random Pick:"}</b>
-                                 <p><a href={post.url.clone()} target="_blank">{&post.title}</a></p>
-                                 <p>{&post.summary}</p>
+                                 <p><a href={post.url.clone()} target="_blank">{ post.title.get(language) }</a></p>
+                                 <p>{ post.summary.get(language) }</p>
                              </>
                          }
                      } else {

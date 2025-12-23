@@ -213,25 +213,46 @@ footer img {
     padding-right: 5px;
 }
 
-footer div.commit {
-    text-align: left;
-
+.footer-left {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-footer div.rights {
-    text-align: center;
+.footer-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-footer div.bongo-cat {
-    text-align: right;
+.footer-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.footer-left .commit {
+    display: flex;
+    align-items: center;
+}
+
+.footer-right .bongo-cat {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
 }
 
 .resize-handle {
     position: absolute;
-    z-index: 101; /* Above title bar and window content */
+    z-index: 101;
+    /* Above title bar and window content */
 }
 
-.resize-handle.top, .resize-handle.bottom {
+.resize-handle.top,
+.resize-handle.bottom {
     height: 10px;
     width: 100%;
     cursor: ns-resize;
@@ -246,7 +267,8 @@ footer div.bongo-cat {
     bottom: -5px;
 }
 
-.resize-handle.left, .resize-handle.right {
+.resize-handle.left,
+.resize-handle.right {
     width: 10px;
     height: 100%;
     cursor: ew-resize;
@@ -261,8 +283,10 @@ footer div.bongo-cat {
     right: -5px;
 }
 
-.resize-handle.top-left, .resize-handle.top-right,
-.resize-handle.bottom-left, .resize-handle.bottom-right {
+.resize-handle.top-left,
+.resize-handle.top-right,
+.resize-handle.bottom-left,
+.resize-handle.bottom-right {
     width: 15px;
     height: 15px;
 }
@@ -271,6 +295,58 @@ footer div.bongo-cat {
     top: -7px;
     left: -7px;
     cursor: nwse-resize;
+}
+
+/* Language Selector (Footer) */
+.language-status {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    position: relative;
+    user-select: none;
+}
+
+.language-status:hover {
+    background-color: #333;
+}
+
+.lang-icon {
+    margin-right: 5px;
+    font-size: 0.8em;
+}
+
+.lang-popup {
+    position: absolute;
+    bottom: 100%;
+    /* Above the footer */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #252525;
+    border: 1px solid #444;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    min-width: 120px;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+.lang-option {
+    padding: 8px 16px;
+    cursor: pointer;
+    color: #cccccc;
+    transition: background-color 0.1s;
+}
+
+.lang-option:hover {
+    background-color: #094771;
+    /* VS Code blue-ish hover */
+    color: white;
+}
+
+.lang-option.active {
+    background-color: #333;
+    font-weight: bold;
+    color: white;
 }
 
 .resize-handle.top-right {

@@ -4,11 +4,13 @@ use crate::components::window::WindowProps;
 use crate::components::loading::Loading;
 use crate::hooks::{use_fetch, FetchState};
 use crate::types::{SimpleTextContent, CountriesContent, ContactContent, QuotesContent, Quote};
+use crate::components::language_context::use_language;
 
 // Loaders
 #[function_component(MeLoader)]
 fn me_loader() -> Html {
     let fetch_state = use_fetch::<SimpleTextContent>("/text/about/me.json");
+    let language = use_language().language;
 
     match fetch_state {
         FetchState::Success(data) => {
@@ -18,7 +20,7 @@ fn me_loader() -> Html {
                 .unwrap()
                 .create_element("div")
                 .unwrap();
-            div.set_inner_html(&data.text);
+            div.set_inner_html(data.text.get(language));
             html! { Html::VRef(div.into()) }
         }
         FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
@@ -29,14 +31,15 @@ fn me_loader() -> Html {
 #[function_component(CountriesLoader)]
 fn countries_loader() -> Html {
     let fetch_state = use_fetch::<CountriesContent>("/text/about/countries.json");
+    let language = use_language().language;
 
     match fetch_state {
         FetchState::Success(data) => html! {
             <>
-                <p>{&data.based}</p>
-                <p>{&data.from}</p>
-                <p>{&data.lived}</p>
-                <p>{&data.visited}</p>
+                <p>{ data.based.get(language) }</p>
+                <p>{ data.from.get(language) }</p>
+                <p>{ data.lived.get(language) }</p>
+                <p>{ data.visited.get(language) }</p>
             </>
         },
         FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
@@ -47,6 +50,7 @@ fn countries_loader() -> Html {
 #[function_component(ContactLoader)]
 fn contact_loader() -> Html {
     let fetch_state = use_fetch::<ContactContent>("/text/about/contact.json");
+    let language = use_language().language;
 
     match fetch_state {
         FetchState::Success(data) => html! {
@@ -54,7 +58,7 @@ fn contact_loader() -> Html {
                 { for data.links.iter().map(|link| html! {
                     <div class="same-line">
                         <img src={link.icon.clone()} alt={link.alt.clone()} class="contact"/>
-                        <a href={link.url.clone()} target="_blank">{&link.text}</a>
+                        <a href={link.url.clone()} target="_blank">{ link.text.get(language) }</a>
                     </div>
                 }) }
             </>
@@ -67,9 +71,10 @@ fn contact_loader() -> Html {
 #[function_component(WhyLoader)]
 fn why_loader() -> Html {
     let fetch_state = use_fetch::<SimpleTextContent>("/text/about/why_gabuzando.json");
+    let language = use_language().language;
 
     match fetch_state {
-        FetchState::Success(data) => html! { <p>{&data.text}</p> },
+        FetchState::Success(data) => html! { <p>{ data.text.get(language) }</p> },
         FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },
         _ => html! { <Loading /> },
     }
@@ -78,6 +83,7 @@ fn why_loader() -> Html {
 #[function_component(QuoteLoader)]
 fn quote_loader() -> Html {
     let fetch_state = use_fetch::<QuotesContent>("/text/about/random_quote.json");
+    let language = use_language().language;
     let quote = use_state(|| None::<Quote>);
 
     {
@@ -101,7 +107,7 @@ fn quote_loader() -> Html {
             if let Some(quote) = &*quote {
                  html! {
                     <>
-                        <p><q>{&quote.text}</q></p>
+                        <p><q>{ quote.text.get(language) }</q></p>
                         <p class="author">{&quote.author}</p>
                     </>
                 }

@@ -2,6 +2,7 @@ use yew::prelude::*;
 
 #[function_component(Header)]
 pub fn header() -> Html {
+
     html! {
         <header>
             <a href="/" class="profile-pic">

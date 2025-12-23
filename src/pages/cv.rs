@@ -3,10 +3,12 @@ use crate::components::window::WindowProps;
 use crate::components::loading::Loading;
 use crate::hooks::{use_fetch, FetchState};
 use crate::types::{ExperienceContent, EducationContent, SkillsContent, AdditionalInfoContent};
+use crate::components::language_context::use_language;
 
 #[function_component(ExperienceLoader)]
 pub fn experience_loader() -> Html {
     let fetch_state = use_fetch::<ExperienceContent>("/text/cv/experience.json");
+    let language = use_language().language;
 
     match fetch_state {
         FetchState::Success(data) => html! {
@@ -14,13 +16,13 @@ pub fn experience_loader() -> Html {
                 { for data.jobs.iter().map(|job| html! {
                     <div class="cv-item">
                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{&job.title}</b></div>
+                            <div><b>{ job.title.get(language) }</b></div>
                             <div>{&job.dates}</div>
                         </div>
                         <p><i>{&job.company}</i></p>
-                        <p>{&job.location}</p>
+                        <p>{ job.location.get(language) }</p>
                         <ul>
-                            { for job.items.iter().map(|item| html! { <li>{item}</li> }) }
+                            { for job.items.iter().map(|item| html! { <li>{ item.get(language) }</li> }) }
                         </ul>
                     </div>
                 }) }
@@ -34,6 +36,7 @@ pub fn experience_loader() -> Html {
 #[function_component(EducationLoader)]
 fn education_loader() -> Html {
     let fetch_state = use_fetch::<EducationContent>("/text/cv/education.json");
+    let language = use_language().language;
 
     match fetch_state {
         FetchState::Success(data) => html! {
@@ -41,11 +44,11 @@ fn education_loader() -> Html {
                 { for data.items.iter().map(|item| html! {
                     <div class="cv-item">
                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <div><b>{&item.degree}</b></div>
+                            <div><b>{ item.degree.get(language) }</b></div>
                             <div>{&item.dates}</div>
                         </div>
                         <p><i>{&item.institution}</i></p>
-                        <p>{&item.location}</p>
+                        <p>{ item.location.get(language) }</p>
                     </div>
                 }) }
             </>
@@ -58,12 +61,13 @@ fn education_loader() -> Html {
 #[function_component(SkillsLoader)]
 fn skills_loader() -> Html {
     let fetch_state = use_fetch::<SkillsContent>("/text/cv/skills.json");
+    let language = use_language().language;
 
     match fetch_state {
         FetchState::Success(data) => html! {
             <>
                 { for data.skills.iter().map(|skill| html! {
-                    <p><b>{&skill.category}</b>{&skill.text}</p>
+                    <p><b>{&skill.category}</b>{ skill.text.get(language) }</p>
                 }) }
             </>
         },
@@ -75,14 +79,15 @@ fn skills_loader() -> Html {
 #[function_component(AdditionalInfoLoader)]
 fn additional_info_loader() -> Html {
     let fetch_state = use_fetch::<AdditionalInfoContent>("/text/cv/additional_info.json");
+    let language = use_language().language;
 
     match fetch_state {
         FetchState::Success(data) => html! {
             <>
                 { for data.sections.iter().map(|section| html! {
                     <div>
-                        <b>{&section.title}</b>
-                        { for section.items.iter().map(|item| html! { <p>{item}</p> }) }
+                        <b>{ section.title.get(language) }</b>
+                        { for section.items.iter().map(|item| html! { <p>{ item.get(language) }</p> }) }
                     </div>
                 }) }
             </>

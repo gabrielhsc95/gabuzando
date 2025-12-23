@@ -3,15 +3,17 @@ use crate::components::window::WindowProps;
 use rand::prelude::*;
 use crate::components::loading::Loading;
 use crate::hooks::{use_fetch, FetchState};
-use crate::types::{SimpleTextContent, GreetingsList};
+use crate::types::{GreetingsList, SimpleTextContent};
 use crate::pages::cv::ExperienceLoader;
 use crate::pages::projects::ProjectLoader;
 use crate::pages::blog::{BlogLoader, BlogMode};
+use crate::components::language_context::use_language;
 
 
 #[function_component(MeLoader)]
 fn me_loader() -> Html {
     let fetch_state = use_fetch::<SimpleTextContent>("/text/about/me.json");
+    let language = use_language().language;
 
     match fetch_state {
         FetchState::Success(data) => {
@@ -21,7 +23,7 @@ fn me_loader() -> Html {
                 .unwrap()
                 .create_element("div")
                 .unwrap();
-            div.set_inner_html(&data.text);
+            div.set_inner_html(data.text.get(language));
             html! { Html::VRef(div.into()) }
         }
         FetchState::Failed(err) => html! { <p style="color: red;">{ err }</p> },

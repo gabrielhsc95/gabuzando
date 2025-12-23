@@ -3,6 +3,7 @@ use crate::components::window::WindowProps;
 use crate::components::loading::Loading;
 use crate::hooks::{use_fetch, FetchState};
 use crate::types::ProjectsContent;
+use crate::components::language_context::use_language;
 
 #[derive(Properties, PartialEq)]
 pub struct ProjectLoaderProps {
@@ -12,6 +13,7 @@ pub struct ProjectLoaderProps {
 #[function_component(ProjectLoader)]
 pub fn project_loader(props: &ProjectLoaderProps) -> Html {
     let fetch_state = use_fetch::<ProjectsContent>("/text/projects/projects.json");
+    let language = use_language().language;
     let id = props.id.clone();
     
     // We could memoize finding the project, but the list is small.
@@ -30,7 +32,7 @@ pub fn project_loader(props: &ProjectLoaderProps) -> Html {
                             }
                             <span style="font-size: 0.8em; color: #666; margin-left: 10px;">{format!("Role: {:?}", project.role)}</span>
                         </div>
-                        <p>{&project.description}</p>
+                        <p>{ project.description.get(language) }</p>
                     </>
                 }
             } else {

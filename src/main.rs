@@ -10,6 +10,7 @@ mod hooks;
 
 use crate::components::footer::Footer;
 use crate::components::header::Header;
+use crate::components::language_context::LanguageProvider;
 use crate::components::window_manager::{WindowManager, WindowManagerProps};
 use crate::pages::{about, blog, cv, home, projects};
 
@@ -53,13 +54,15 @@ pub fn app() -> Html {
     };
 
     html! {
-        <div>
-            <Header />
-            <main>
-                <WindowManager ..window_manager_props/>
-            </main>
-            <Footer />
-        </div>
+        <LanguageProvider>
+            <div>
+                <Header />
+                <main>
+                    <WindowManager ..window_manager_props/>
+                </main>
+                <Footer />
+            </div>
+        </LanguageProvider>
     }
 }
 
