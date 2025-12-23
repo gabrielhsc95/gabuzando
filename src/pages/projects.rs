@@ -82,9 +82,9 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
         },
         // Cell 4: Placeholder
         WindowProps {
-            title: AttrValue::from("project/placeholder_1"),
+            title: AttrValue::from("project/logfire-rust"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="placeholder_1" />
+                <ProjectLoader id="logfire-rust" />
             }]),
             x: 1.0,
             y: 39.3,
@@ -106,9 +106,9 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
         },
         // Cell 6: Placeholder
         WindowProps {
-            title: AttrValue::from("project/placeholder_2"),
+            title: AttrValue::from("project/live-bootcamp-project"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="placeholder_2" />
+                <ProjectLoader id="live-bootcamp-project" />
             }]),
             x: 67.2,
             y: 39.3,
@@ -142,9 +142,9 @@ pub fn get_projects_windows() -> Vec<WindowProps> {
         },
         // Cell 9: Placeholder
         WindowProps {
-            title: AttrValue::from("project/placeholder_3"),
+            title: AttrValue::from("project/placeholder_1"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="placeholder_3" />
+                <ProjectLoader id="placeholder_1" />
             }]),
             x: 67.2,
             y: 67.6,
