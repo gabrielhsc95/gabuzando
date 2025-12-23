@@ -1,0 +1,7 @@
+[build]
+dist = "public"
+
+[[hooks]]
+stage = "post_build"
+command = "sh"
+command_arguments = ["-c", "cp \"$TRUNK_STAGING_DIR/index.html\" \"$TRUNK_STAGING_DIR/404.html\""]
