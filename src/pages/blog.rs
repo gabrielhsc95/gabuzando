@@ -31,13 +31,22 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
 
              match mode {
                  BlogMode::Post => {
-                     // Show latest post full content (description for now)
+                     // Show latest post full content
                      if let Some(post) = posts.first() {
+                         let div = web_sys::window()
+                             .unwrap()
+                             .document()
+                             .unwrap()
+                             .create_element("div")
+                             .unwrap();
+                         div.set_inner_html(&post.content);
+                         let _ = div.set_attribute("style", "display: flex; flex-direction: column; gap: 1em; line-height: 1.6;");
+
                          html! {
                              <>
-                                 <h2>{&post.title}</h2>
-                                 <p style="font-size: 0.8em; color: #666;">{&post.date}{" | Likes: "}{&post.likes}</p>
-                                 <p>{&post.content}</p>
+                                 <h2 style="margin-bottom: 0;">{&post.title}</h2>
+                                 <p style="font-size: 0.8em; color: #666; margin-top: 0.2rem; margin-bottom: 2rem;">{&post.date}{" | Likes: "}{&post.likes}</p>
+                                 { Html::VRef(div.into()) }
                              </>
                          }
                      } else {

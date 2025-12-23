@@ -117,7 +117,6 @@ pub struct BlogItem {
     pub id: String,
     pub title: String,
     pub url: String,
-    pub description: String,
     pub summary: String,
     pub content: String,
     pub likes: u32,
