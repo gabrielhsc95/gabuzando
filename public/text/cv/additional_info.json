@@ -1,0 +1,88 @@
+{
+    "sections": [
+        {
+            "title": {
+                "en": "Volunteering",
+                "pt": "Voluntariado"
+            },
+            "items": [
+                {
+                    "en": "Teaching programming for a countryside kid since 2022.",
+                    "pt": "Ensinando programação para uma criança do interior desde 2022."
+                },
+                {
+                    "en": "Taught Mathematics to countryside kids in Brazil during the COVID-19 pandemic (2021).",
+                    "pt": "Ensinei Matemática para crianças do interior no Brasil durante a pandemia de COVID-19 (2021)."
+                }
+            ]
+        },
+        {
+            "title": {
+                "en": "Awards",
+                "pt": "Prêmios"
+            },
+            "items": [
+                {
+                    "en": "Best Student in the Electromechanics Program, 2011",
+                    "pt": "Melhor Aluno no Curso de Eletromecânica, 2011"
+                },
+                {
+                    "en": "Bronze Medal in the Brazilian Olympics of Astronomy and Astronautics, 2009",
+                    "pt": "Medalha de Bronze na Olimpíada Brasileira de Astronomia e Astronáutica (OBA), 2009"
+                },
+                {
+                    "en": "Honorable Mention in the Brazilian Olympics of Mathematics for Public Schools, 2007",
+                    "pt": "Menção Honrosa na Olimpíada Brasileira de Matemática das Escolas Públicas (OBMEP), 2007"
+                }
+            ]
+        },
+        {
+            "title": {
+                "en": "Seminars",
+                "pt": "Seminários"
+            },
+            "items": [
+                {
+                    "en": "Presented Introduction to Cosmic Topology, Londrina-PR, Brazil, 2016",
+                    "pt": "Apresentou Introdução à Topologia Cósmica, Londrina-PR, Brasil, 2016"
+                },
+                {
+                    "en": "Presented Physics of Boomerang, Londrina-PR, Brazil, 2013",
+                    "pt": "Apresentou A Física do Bumerangue, Londrina-PR, Brasil, 2013"
+                },
+                {
+                    "en": "Attended IV Jayme Tiomno School of Cosmology at National Observatory, Rio de Janeiro-RJ, Brazil, 2016",
+                    "pt": "Participou da IV Escola Jayme Tiomno de Cosmologia no Observatório Nacional, Rio de Janeiro-RJ, Brasil, 2016"
+                },
+                {
+                    "en": "Attended Physics Week at the State University of Londrina XVI (2011), XVII (2012), XVIII (2013), XX (2015), and XXI (2016)",
+                    "pt": "Participou da Semana de Física na Universidade Estadual de Londrina XVI (2011), XVII (2012), XVIII (2013), XX (2015) e XXI (2016)"
+                }
+            ]
+        },
+        {
+            "title": {
+                "en": "Certifications",
+                "pt": "Certificações"
+            },
+            "items": [
+                {
+                    "en": "Stipendium Hungaricum by Tempus Public Foundation between Sep. 2018 – Jul. 2020",
+                    "pt": "Stipendium Hungaricum pela Tempus Public Foundation entre Set. 2018 – Jul. 2020"
+                },
+                {
+                    "en": "Tutorial Education Program (PET) by the Brazilian Ministry of Education (MEC) between Mar. 2013 – Mar. 2014  and Oct. 2015 – Mar. 2017",
+                    "pt": "Programa de Educação Tutorial (PET) pelo Ministério da Educação (MEC) entre Mar. 2013 – Mar. 2014 e Out. 2015 – Mar. 2017"
+                },
+                {
+                    "en": "Science Without Borders by Coordination for the Improvement of Higher Education Personnel (CAPES) and National Council for Scientific and Technological Development (CNPq) between Aug. 2014 – May 2015",
+                    "pt": "Ciência Sem Fronteiras pela Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES) e Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq) entre Ago. 2014 – Mai 2015"
+                },
+                {
+                    "en": "FIEP Scholarship by Federation of Industries of Paraná State (FIEP) between  Feb. 2010 – Dec. 2011",
+                    "pt": "Bolsa FIEP pela Federação das Indústrias do Estado do Paraná (FIEP) entre Fev. 2010 – Dez. 2011"
+                }
+            ]
+        }
+    ]
+}

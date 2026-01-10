@@ -1,0 +1,32 @@
+{
+    "skills": [
+        {
+            "category": "Languages",
+            "text": {
+                "en": ": Native Portuguese, Advanced English, Intermediate Spanish",
+                "pt": ": Português Nativo, Inglês Avançado, Espanhol Intermediário"
+            }
+        },
+        {
+            "category": "Programming languages",
+            "text": {
+                "en": ": Rust (leptos, clap, derive_more, serde), Python (pandas, numpy, Django, FastAPI, LangChain, LangGraph, Pydantic), Matlab, Mathematica, C, C++, Java",
+                "pt": ": Rust (leptos, clap, derive_more, serde), Python (pandas, numpy, Django, FastAPI, LangChain, LangGraph, Pydantic), Matlab, Mathematica, C, C++, Java"
+            }
+        },
+        {
+            "category": "Tools",
+            "text": {
+                "en": ": Microsoft Office, Image Editing, Audio Editing, Video Editing",
+                "pt": ": Microsoft Office, Edição de Imagem, Edição de Áudio, Edição de Vídeo"
+            }
+        },
+        {
+            "category": "Soft Skills",
+            "text": {
+                "en": ": Public Speaking, Teamwork, Leadership, Problem-Solving",
+                "pt": ": Oratória, Trabalho em Equipe, Liderança, Resolução de Problemas"
+            }
+        }
+    ]
+}

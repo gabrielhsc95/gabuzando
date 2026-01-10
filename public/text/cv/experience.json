@@ -1,0 +1,118 @@
+{
+    "jobs": [
+        {
+            "title": {
+                "en": "Quantitative Researcher (Senior Associate)",
+                "pt": "Pesquisador Quantitativo (Associado Sênior)"
+            },
+            "dates": "Aug. 2024 – Present",
+            "company": "MSCI",
+            "location": {
+                "en": "Norman, Oklahoma, United States",
+                "pt": "Norman, Oklahoma, Estados Unidos"
+            },
+            "items": [
+                {
+                    "en": "Developed an AI financial analyst agent, focusing on named entity recognition and validation.",
+                    "pt": "Desenvolvi um agente analista financeiro com IA, focando no reconhecimento e validação de entidades nomeadas."
+                },
+                {
+                    "en": "Participated in research discussions to enhance agent capabilities using various LLM models.",
+                    "pt": "Participei de discussões de pesquisa para aprimorar as capacidades do agente usando vários modelos de LLM."
+                },
+                {
+                    "en": "Understood client engagement to improve on pain points.",
+                    "pt": "Compreendi o engajamento do cliente para melhorar os pontos problemáticos."
+                }
+            ]
+        },
+        {
+            "title": {
+                "en": "Financial Engineer (Senior Associate)",
+                "pt": "Engenheiro Financeiro (Associado Sênior)"
+            },
+            "dates": "Jan. 2024 - Jul. 2024",
+            "company": "MSCI",
+            "location": {
+                "en": "Norman, Oklahoma, United States",
+                "pt": "Norman, Oklahoma, Estados Unidos"
+            },
+            "items": [
+                {
+                    "en": "Teach Led in Testing, empowering 4 people to implement new features to an automated testing software",
+                    "pt": "Liderei tecnicamente em Testes, capacitando 4 pessoas para implementar novos recursos em um software de teste automatizado"
+                },
+                {
+                    "en": "Managed the testing side implementation of two new pricing models.",
+                    "pt": "Gerenciei a implementação do lado de testes de dois novos modelos de precificação."
+                }
+            ]
+        },
+        {
+            "title": {
+                "en": "Financial Engineer (Associate)",
+                "pt": "Engenheiro Financeiro (Associado)"
+            },
+            "dates": "Jan. 2023 - Dec. 2023",
+            "company": "MSCI",
+            "location": {
+                "en": "Norman, Oklahoma, United States",
+                "pt": "Norman, Oklahoma, Estados Unidos"
+            },
+            "items": [
+                {
+                    "en": "Analytical Quality Assurance for financial factor models.",
+                    "pt": "Garantia de Qualidade Analítica para modelos de fatores financeiros."
+                },
+                {
+                    "en": "Developed and reviewed financial building blocks libraries to facilitate the replication of financial models.",
+                    "pt": "Desenvolvi e revisei bibliotecas de blocos de construção financeiros para facilitar a replicação de modelos financeiros."
+                }
+            ]
+        },
+        {
+            "title": {
+                "en": "Financial Engineer (Analyst)",
+                "pt": "Engenheiro Financeiro (Analista)"
+            },
+            "dates": "Jun. 2021 - Dec. 2022",
+            "company": "MSCI",
+            "location": {
+                "en": "Norman, Oklahoma, United States and Budapest, Hungary",
+                "pt": "Norman, Oklahoma, Estados Unidos e Budapeste, Hungria"
+            },
+            "items": [
+                {
+                    "en": "Built an automated testing software for a financial pricing analytics library, and integrated it to the build pipeline.",
+                    "pt": "Construí um software de teste automatizado para uma biblioteca de análise de precificação financeira e o integrei ao pipeline de build."
+                },
+                {
+                    "en": "Developed two financial models to estimate financed emissions in accordance with PCAF.",
+                    "pt": "Desenvolvi dois modelos financeiros para estimar emissões financiadas de acordo com o PCAF."
+                }
+            ]
+        },
+        {
+            "title": {
+                "en": "Financial Engineer (Intern)",
+                "pt": "Engenheiro Financeiro (Estagiário)"
+            },
+            "dates": "Sep. 2020 - Jun. 2021",
+            "company": "MSCI",
+            "location": {
+                "en": "Budapest, Hungary",
+                "pt": "Budapeste, Hungria"
+            },
+            "items": [
+                {
+                    "en": "Analytical Quality Assurance for a financial pricing analytics library.",
+                    "pt": "Garantia de Qualidade Analítica para uma biblioteca de análise de precificação financeira."
+                },
+                {
+                    "en": "Engage with developer and research about new features and bugs.",
+                    "pt": "Engajamento com desenvolvedores e pesquisa sobre novos recursos e bugs."
+                }
+            ]
+        }
+    ]
+}

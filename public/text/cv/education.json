@@ -1,0 +1,52 @@
+{
+    "items": [
+        {
+            "degree": {
+                "en": "Physics (MSc)",
+                "pt": "Mestrado em Física"
+            },
+            "dates": "Sep. 2018 – Jun. 2020",
+            "institution": "Eötvös Loránd Tudományegyetem (ELTE)",
+            "location": {
+                "en": "Budapest, Hungary",
+                "pt": "Budapeste, Hungria"
+            }
+        },
+        {
+            "degree": {
+                "en": "Physics (BSc)",
+                "pt": "Bacharel em Física"
+            },
+            "dates": "Feb. 2012 – Mar. 2017",
+            "institution": "Universidade Estadual de Londrina (UEL)",
+            "location": {
+                "en": "Londrina, Paraná, Brazil",
+                "pt": "Londrina, Paraná, Brazil"
+            }
+        },
+        {
+            "degree": {
+                "en": "Physics (BSc)",
+                "pt": "Bacharel em Física"
+            },
+            "dates": "Aug. 2014 – May. 2015",
+            "institution": "Xavier University (XU)",
+            "location": {
+                "en": "Cincinnati, Ohio, United States",
+                "pt": "Cincinnati, Ohio, Estados Unidos"
+            }
+        },
+        {
+            "degree": {
+                "en": "Electromechanics (Technical Course)",
+                "pt": "Técnico em Eletromecânica"
+            },
+            "dates": "Feb. 2010 – Dec. 2011",
+            "institution": "Serviço Nacional de Aprendizagem Industrial (SENAI)",
+            "location": {
+                "en": "Londrina, Paraná, Brazil",
+                "pt": "Londrina, Paraná, Brazil"
+            }
+        }
+    ]
+}

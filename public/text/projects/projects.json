@@ -1,0 +1,94 @@
+{
+    "projects": [
+        {
+            "id": "crustacean-capital",
+            "name": "crustacean-capital",
+            "url": "https://github.com/gabrielhsc95/crustacean-capital",
+            "description": {
+                "en": "A bond pricer in Rust.",
+                "pt": "Um precificador de títulos em Rust."
+            },
+            "role": "Mine"
+        },
+        {
+            "id": "gabuzando",
+            "name": "gabuzando",
+            "url": "https://github.com/gabrielhsc95/gabuzando",
+            "description": {
+                "en": "This website! Built in Rust to showcase my experience and some of my thoughts.",
+                "pt": "Este site! Construído em Rust para mostrar minha experiência e alguns dos meus pensamentos."
+            },
+            "role": "Mine"
+        },
+        {
+            "id": "cinema-city",
+            "name": "cinema-city",
+            "url": "https://github.com/gabrielhsc95/cinema-city",
+            "description": {
+                "en": "Scrapes the movies that are screening in English in Budapest, Hungary. So I could go to the movies.",
+                "pt": "Busca os filmes que estão em cartaz em inglês em Budapeste, Hungria. Para que eu pudesse ir ao cinema."
+            },
+            "role": "Mine"
+        },
+        {
+            "id": "tictactoe",
+            "name": "tictactoe",
+            "url": "https://github.com/gabrielhsc95/tictactoe",
+            "description": {
+                "en": "More than just a Tic Tac Toe, it is blazingly fast binary game engine and Artificial Intelligence.",
+                "pt": "Mais do que apenas um Jogo da Velha, é um mecanismo de jogo binário incrivelmente rápido e Inteligência Artificial."
+            },
+            "role": "Mine"
+        },
+        {
+            "id": "mentor_xmercury",
+            "name": "project_xmercury",
+            "url": "https://github.com/Giovani-Costa/project_xmercury",
+            "description": {
+                "en": "Manage a Tabletop RPG game using a discord bot and streamlit app.",
+                "pt": "Gerencie um jogo de RPG de mesa usando um bot do Discord e um aplicativo Streamlit."
+            },
+            "role": "Mentor"
+        },
+        {
+            "id": "mentor_xlunar",
+            "name": "project_xlunar",
+            "url": "https://github.com/Giovani-Costa/project_xlunar",
+            "description": {
+                "en": "Discord bot to help student for standards exams.",
+                "pt": "Bot do Discord para ajudar estudantes em exames padronizados."
+            },
+            "role": "Mentor"
+        },
+        {
+            "id": "logfire-rust",
+            "name": "Logfire",
+            "url": "https://github.com/gabrielhsc95/logfire-rust",
+            "description": {
+                "en": "Monitor your entire AI application stack—not just LLM calls. See LLM interactions, agent behavior, evals, API requests, database queries, and everything in between. Built on OpenTelemetry with native integrations for AI frameworks, plus comprehensive observability for any workload in any language. From local dev to production.",
+                "pt": "Monitore toda a sua pilha de aplicativos de IA — não apenas chamadas de LLM. Veja interações de LLM, comportamento de agentes, avaliações, solicitações de API, consultas de banco de dados e tudo mais. Construído sobre OpenTelemetry com integrações nativas para frameworks de IA, além de observabilidade abrangente para qualquer carga de trabalho em qualquer linguagem. Do desenvolvimento local à produção."
+            },
+            "role": "Contributor"
+        },
+        {
+            "id": "live-bootcamp-project",
+            "name": "Auth system",
+            "url": "https://github.com/gabrielhsc95/live-bootcamp-project",
+            "description": {
+                "en": "A project for a bootcamp in Rust.",
+                "pt": "Um projeto para um bootcamp em Rust."
+            },
+            "role": "Mine"
+        },
+        {
+            "id": "placeholder_1",
+            "name": "Future Project",
+            "url": null,
+            "description": {
+                "en": "Future project goes here.",
+                "pt": "Projeto futuro vai aqui."
+            },
+            "role": "Mine"
+        }
+    ]
+}

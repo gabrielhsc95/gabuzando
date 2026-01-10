@@ -1,5 +1,5 @@
 [build]
-dist = "public"
+
 
 [[hooks]]
 stage = "post_build"

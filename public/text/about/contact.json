@@ -1,0 +1,40 @@
+{
+    "links": [
+        {
+            "icon": "/images/gmail.png",
+            "alt": "Email",
+            "text": {
+                "en": "gabrielhsc95@gmail.com",
+                "pt": "gabrielhsc95@gmail.com"
+            },
+            "url": "mailto:gabrielhsc95@gmail.com"
+        },
+        {
+            "icon": "/images/instagram.png",
+            "alt": "Instagram",
+            "text": {
+                "en": "@gabrielhsc95",
+                "pt": "@gabrielhsc95"
+            },
+            "url": "https://instagram.com/gabrielhsc95"
+        },
+        {
+            "icon": "/images/linkedin.png",
+            "alt": "LinkedIn",
+            "text": {
+                "en": "/in/gabrielhsc95",
+                "pt": "/in/gabrielhsc95"
+            },
+            "url": "https://linkedin.com/in/gabrielhsc95"
+        },
+        {
+            "icon": "/images/github.png",
+            "alt": "GitHub",
+            "text": {
+                "en": "gabrielhsc95",
+                "pt": "gabrielhsc95"
+            },
+            "url": "https://github.com/gabrielhsc95"
+        }
+    ]
+}
