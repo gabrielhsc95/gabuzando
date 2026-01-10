@@ -10,7 +10,13 @@ impl LocalizedText {
     pub fn get(&self, lang: Language) -> &str {
         match lang {
             Language::English => &self.en,
-            Language::Portuguese => if self.pt.is_empty() { &self.en } else { &self.pt },
+            Language::Portuguese => {
+                if self.pt.is_empty() {
+                    &self.en
+                } else {
+                    &self.pt
+                }
+            }
         }
     }
 }

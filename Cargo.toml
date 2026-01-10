@@ -17,3 +17,4 @@ wasm-bindgen-futures = "0.4"
 gloo-timers = "0.3"
 rand = "0.8"
 getrandom = { version = "0.2", features = ["js"] }
+gloo-events = "0.2"

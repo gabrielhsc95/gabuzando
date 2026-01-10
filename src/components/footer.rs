@@ -1,6 +1,7 @@
 use yew::prelude::*;
 use crate::types::Language;
 use crate::components::language_context::use_language;
+use crate::components::bongo_cat::BongoCat;
 
 #[function_component(Footer)]
 pub fn footer() -> Html {
@@ -66,9 +67,7 @@ pub fn footer() -> Html {
                         </div>
                     }
                 </div>
-                <div class="bongo-cat">
-                    <img src="/images/bongo-temp.png" alt="bongo cat"/>
-                </div>
+                <BongoCat />
             </div>
         </footer>
     }

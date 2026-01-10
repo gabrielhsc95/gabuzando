@@ -202,6 +202,7 @@ dependencies = [
  "console_error_panic_hook",
  "console_log",
  "getrandom",
+ "gloo-events 0.2.0",
  "gloo-net 0.6.0",
  "gloo-timers 0.3.0",
  "log",

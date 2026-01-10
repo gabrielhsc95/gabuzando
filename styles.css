@@ -366,3 +366,22 @@ footer img {
     right: -7px;
     cursor: nwse-resize;
 }
+
+@font-face {
+    font-family: 'BongoCat';
+    src: url('bongocat.woff') format('woff');
+    font-display: block;
+}
+
+.bongo-cat {
+    font-family: 'BongoCat';
+    font-size: 1.0rem;
+    cursor: pointer;
+    user-select: none;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    /* min-width removed to prevent wide gap */
+}
