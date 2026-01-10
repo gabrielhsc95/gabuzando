@@ -1,5 +1,5 @@
 use log::{Level, info};
-use std::collections::HashMap;
+
 use web_sys;
 use yew::prelude::*;
 
@@ -27,30 +27,21 @@ pub fn get_current_path() -> AttrValue {
 #[function_component(App)]
 pub fn app() -> Html {
     let current_page = use_state(get_current_path);
+
+    let windows = match current_page.as_str() {
+        "/" => Some(home::get_home_windows()),
+        "/about" => Some(about::get_about_windows()),
+        "/cv" => Some(cv::get_cv_windows()),
+        "/projects" => Some(projects::get_projects_windows()),
+        path if path.starts_with("/blog") => {
+            let slug = path.strip_prefix("/blog/").filter(|s| !s.is_empty()).map(|s| s.to_string());
+            Some(blog::get_blog_windows(slug))
+        },
+        _ => None,
+    };
+
     let window_manager_props = WindowManagerProps {
-        current_page: (*current_page).clone(),
-        pages: HashMap::from([
-            (
-                AttrValue::from("/"),
-                home::get_home_windows(),
-            ),
-            (
-                AttrValue::from("/about"),
-                about::get_about_windows(),
-            ),
-            (
-                AttrValue::from("/cv"),
-                cv::get_cv_windows(),
-            ),
-            (
-                AttrValue::from("/blog"),
-                blog::get_blog_windows(),
-            ),
-            (
-                AttrValue::from("/projects"),
-                projects::get_projects_windows(),
-            ),
-        ]),
+        windows,
     };
 
     html! {

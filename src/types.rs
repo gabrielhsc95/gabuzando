@@ -143,7 +143,7 @@ pub struct ProjectsContent {
 pub struct BlogItem {
     pub id: String,
     pub title: LocalizedText,
-    pub url: String,
+    pub slug: String,
     pub summary: LocalizedText,
     pub content: LocalizedText,
     pub likes: u32,

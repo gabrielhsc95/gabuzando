@@ -105,7 +105,7 @@ pub fn get_home_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("blog/best"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <BlogLoader mode={BlogMode::Best} />
+                <BlogLoader mode={BlogMode::Best} slug={None::<String>} />
             }]),
             x: 67.2,
             y: 39.3,

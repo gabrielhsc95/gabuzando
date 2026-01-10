@@ -17,6 +17,7 @@ pub enum BlogMode {
 #[derive(Properties, PartialEq)]
 pub struct BlogLoaderProps {
     pub mode: BlogMode,
+    pub slug: Option<String>,
 }
 
 #[function_component(BlogLoader)]
@@ -24,6 +25,7 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
     let fetch_state = use_fetch::<BlogList>("/text/blog/posts.json");
     let language = use_language().language;
     let mode = props.mode.clone();
+    let current_slug = props.slug.clone();
 
     match fetch_state {
         FetchState::Success(data) => {
@@ -33,8 +35,14 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
 
              match mode {
                  BlogMode::Post => {
-                     // Show latest post full content
-                     if let Some(post) = posts.first() {
+                     // Check for slug or show latest
+                     let target_post = if let Some(slug) = current_slug {
+                         posts.iter().find(|p| p.slug == slug).or(posts.first())
+                     } else {
+                         posts.first()
+                     };
+
+                     if let Some(post) = target_post {
                          let div = web_sys::window()
                              .unwrap()
                              .document()
@@ -61,7 +69,7 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
                          <ul>
                              { for posts.iter().map(|post| html! {
                                  <li>
-                                     <a href={post.url.clone()} target="_blank">{ post.title.get(language) }</a>
+                                     <a href={format!("/blog/{}", post.slug)}>{ post.title.get(language) }</a>
                                      <span style="font-size: 0.8em; color: #666;">{format!(" ({})", post.date)}</span>
                                  </li>
                              }) }
@@ -75,7 +83,7 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
                          <ul>
                              { for posts.iter().take(5).map(|post| html! {
                                  <li>
-                                     <a href={post.url.clone()} target="_blank">{ post.title.get(language) }</a>
+                                     <p><a href={format!("/blog/{}", post.slug)}>{ post.title.get(language) }</a></p>
                                      <span style="font-size: 0.8em; color: #666;">{format!(" ({} likes)", post.likes)}</span>
                                  </li>
                              }) }
@@ -88,7 +96,7 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
                          html! {
                              <>
                                  <b>{"Random Pick:"}</b>
-                                 <p><a href={post.url.clone()} target="_blank">{ post.title.get(language) }</a></p>
+                                 <p><a href={format!("/blog/{}", post.slug)}>{ post.title.get(language) }</a></p>
                                  <p>{ post.summary.get(language) }</p>
                              </>
                          }
@@ -103,13 +111,13 @@ pub fn blog_loader(props: &BlogLoaderProps) -> Html {
     }
 }
 
-pub fn get_blog_windows() -> Vec<WindowProps> {
+pub fn get_blog_windows(slug: Option<String>) -> Vec<WindowProps> {
     vec![
         // Post (Cells 1, 2, 4, 5, 7, 8 - Left & Center Cols, Spanning All Rows)
         WindowProps {
             title: AttrValue::from("blog/post"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <BlogLoader mode={BlogMode::Post} />
+                <BlogLoader mode={BlogMode::Post} slug={slug} />
             }]),
             x: 1.0,
             y: 10.0,
@@ -121,7 +129,7 @@ pub fn get_blog_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("blog/history"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <BlogLoader mode={BlogMode::History} />
+                <BlogLoader mode={BlogMode::History} slug={None::<String>} />
             }]),
             x: 67.2,
             y: 10.0,
@@ -133,7 +141,7 @@ pub fn get_blog_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("blog/best"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <BlogLoader mode={BlogMode::Best} />
+                <BlogLoader mode={BlogMode::Best} slug={None::<String>} />
             }]),
             x: 67.2,
             y: 39.3,
@@ -145,7 +153,7 @@ pub fn get_blog_windows() -> Vec<WindowProps> {
         WindowProps {
             title: AttrValue::from("blog/random"),
             content: yew::html::ChildrenRenderer::new(vec![html! {
-                <BlogLoader mode={BlogMode::Random} />
+                <BlogLoader mode={BlogMode::Random} slug={None::<String>} />
             }]),
             x: 67.2,
             y: 67.6,
