@@ -97,55 +97,75 @@ fn additional_info_loader() -> Html {
     }
 }
 
+pub fn get_experience_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("cv/experience"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <ExperienceLoader />
+        }]),
+        x: 1.0,
+        y: 10.0,
+        width: 31.6,
+        height: 55.6,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
+pub fn get_education_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("cv/education"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <EducationLoader />
+        }]),
+        x: 34.6,
+        y: 10.0,
+        width: 64.2,
+        height: 27.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
+pub fn get_skills_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("cv/skills"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <SkillsLoader />
+        }]),
+        x: 34.6,
+        y: 39.3,
+        width: 64.2,
+        height: 26.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
+pub fn get_additional_info_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("cv/additional_information"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <AdditionalInfoLoader />
+        }]),
+        x: 1.0,
+        y: 67.6,
+        width: 97.8,
+        height: 27.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
 pub fn get_cv_windows() -> Vec<WindowProps> {
     vec![
-        // Experience (Cells 1, 4 - Left Column)
-        WindowProps {
-            title: AttrValue::from("cv/experience"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ExperienceLoader />
-            }]),
-            x: 1.0,
-            y: 10.0,
-            width: 31.6,
-            height: 55.6,
-            buffer: 20.0,
-        },
-        // Education (Cells 2, 3 - Top Row, Center+Right)
-        WindowProps {
-            title: AttrValue::from("cv/education"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <EducationLoader />
-            }]),
-            x: 34.6,
-            y: 10.0,
-            width: 64.2,
-            height: 27.3,
-            buffer: 20.0,
-        },
-        // Skills (Cells 5, 6 - Middle Row, Center+Right)
-        WindowProps {
-            title: AttrValue::from("cv/skills"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <SkillsLoader />
-            }]),
-            x: 34.6,
-            y: 39.3,
-            width: 64.2,
-            height: 26.3,
-            buffer: 20.0,
-        },
-        // Additional Information (Cells 7, 8, 9 - Bottom Row)
-        WindowProps {
-            title: AttrValue::from("cv/additional_information"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <AdditionalInfoLoader />
-            }]),
-            x: 1.0,
-            y: 67.6,
-            width: 97.8,
-            height: 27.3,
-            buffer: 20.0,
-        },
+        get_experience_window(),
+        get_education_window(),
+        get_skills_window(),
+        get_additional_info_window(),
     ]
 }

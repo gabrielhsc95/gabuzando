@@ -121,79 +121,109 @@ fn quote_loader() -> Html {
 }
 
 
+pub fn get_photo_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("about/photo"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <img src="/images/photo.jpg" alt="Gabriel's Photo" style="width:100%; height:100%; object-fit:cover;" />
+        }]),
+        x: 1.0,
+        y: 10.0,
+        width: 31.6,
+        height: 55.6,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
+pub fn get_me_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("about/me"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <MeLoader />
+        }]),
+        x: 34.6,
+        y: 10.0,
+        width: 64.2,
+        height: 27.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
+pub fn get_countries_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("about/countries"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <CountriesLoader />
+        }]),
+        x: 34.6,
+        y: 39.3,
+        width: 30.6,
+        height: 26.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
+pub fn get_contact_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("about/contact"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <ContactLoader />
+        }]),
+        x: 67.2,
+        y: 39.3,
+        width: 31.6,
+        height: 26.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
+pub fn get_why_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("about/why_gabuzando"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <WhyLoader />
+        }]),
+        x: 1.0,
+        y: 67.6,
+        width: 64.2,
+        height: 27.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
+pub fn get_quote_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("about/random_quote"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <QuoteLoader />
+        }]),
+        x: 67.2,
+        y: 67.6,
+        width: 31.6,
+        height: 27.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
 pub fn get_about_windows() -> Vec<WindowProps> {
     vec![
-        // Photo
-        WindowProps {
-            title: AttrValue::from("about/photo"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <img src="/images/photo.jpg" alt="Gabriel's Photo" style="width:100%; height:100%; object-fit:cover;" />
-            }]),
-            x: 1.0,
-            y: 10.0,
-            width: 31.6,
-            height: 55.6,
-            buffer: 20.0,
-        },
-        // Me
-        WindowProps {
-            title: AttrValue::from("about/me"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <MeLoader />
-            }]),
-            x: 34.6,
-            y: 10.0,
-            width: 64.2,
-            height: 27.3,
-            buffer: 20.0,
-        },
-        // Countries
-        WindowProps {
-            title: AttrValue::from("about/countries"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <CountriesLoader />
-            }]),
-            x: 34.6,
-            y: 39.3,
-            width: 30.6,
-            height: 26.3,
-            buffer: 20.0,
-        },
-        // Contact
-        WindowProps {
-            title: AttrValue::from("about/contact"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ContactLoader />
-            }]),
-            x: 67.2,
-            y: 39.3,
-            width: 31.6,
-            height: 26.3,
-            buffer: 20.0,
-        },
-        // Why Gabuzando
-        WindowProps {
-            title: AttrValue::from("about/why_gabuzando"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <WhyLoader />
-            }]),
-            x: 1.0,
-            y: 67.6,
-            width: 64.2,
-            height: 27.3,
-            buffer: 20.0,
-        },
-        // Random Quote
-        WindowProps {
-            title: AttrValue::from("about/random_quote"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <QuoteLoader />
-            }]),
-            x: 67.2,
-            y: 67.6,
-            width: 31.6,
-            height: 27.3,
-            buffer: 20.0,
-        },
+        get_photo_window(),
+        get_me_window(),
+        get_countries_window(),
+        get_contact_window(),
+        get_why_window(),
+        get_quote_window(),
     ]
 }

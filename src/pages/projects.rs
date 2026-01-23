@@ -44,115 +44,82 @@ pub fn project_loader(props: &ProjectLoaderProps) -> Html {
     }
 }
 
+pub fn get_project_window(id: &str) -> WindowProps {
+    WindowProps {
+        title: AttrValue::from(format!("project/{}", id)),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <ProjectLoader id={id.to_string()} />
+        }]),
+        x: 1.0, // Default positions, likely to be overridden or managed by window manager placement strategy if possible? 
+                // Context menu might need to place it near mouse or center. 
+                // For now, let's keep the hardcoded positions in the main getter, 
+                // but this factory will return a default one or we should pass x, y etc?
+                // The task says "open a new window". 
+                // Let's just give it a default satisfying position.
+        y: 10.0,
+        width: 31.6,
+        height: 27.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
 pub fn get_projects_windows() -> Vec<WindowProps> {
     vec![
         // Cell 1: Crustacean Capital
-        WindowProps {
-            title: AttrValue::from("project/crustacean-capital"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="crustacean-capital" />
-            }]),
-            x: 1.0,
-            y: 10.0,
-            width: 31.6,
-            height: 27.3,
-            buffer: 20.0,
+        {
+            let mut w = get_project_window("crustacean-capital");
+            w.x = 1.0; w.y = 10.0; w.width = 31.6; w.height = 27.3;
+            w
         },
         // Cell 2: Gabuzando
-        WindowProps {
-            title: AttrValue::from("project/gabuzando"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="gabuzando" />
-            }]),
-            x: 34.6,
-            y: 10.0,
-            width: 30.6,
-            height: 27.3,
-            buffer: 20.0,
+        {
+            let mut w = get_project_window("gabuzando");
+            w.x = 34.6; w.y = 10.0; w.width = 30.6; w.height = 27.3;
+            w
         },
         // Cell 3: Cinema City
-        WindowProps {
-            title: AttrValue::from("project/cinema-city"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="cinema-city" />
-            }]),
-            x: 67.2,
-            y: 10.0,
-            width: 31.6,
-            height: 27.3,
-            buffer: 20.0,
+        {
+            let mut w = get_project_window("cinema-city");
+            w.x = 67.2; w.y = 10.0; w.width = 31.6; w.height = 27.3;
+            w
         },
         // Cell 4: Placeholder
-        WindowProps {
-            title: AttrValue::from("project/logfire-rust"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="logfire-rust" />
-            }]),
-            x: 1.0,
-            y: 39.3,
-            width: 31.6,
-            height: 26.3,
-            buffer: 20.0,
+        {
+            let mut w = get_project_window("logfire-rust");
+            w.x = 1.0; w.y = 39.3; w.width = 31.6; w.height = 26.3;
+            w
         },
         // Cell 5: Tic Tac Toe
-        WindowProps {
-            title: AttrValue::from("project/tictactoe"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                 <ProjectLoader id="tictactoe" />
-            }]),
-            x: 34.6,
-            y: 39.3,
-            width: 30.6,
-            height: 26.3,
-            buffer: 20.0,
+        {
+            let mut w = get_project_window("tictactoe");
+            w.x = 34.6; w.y = 39.3; w.width = 30.6; w.height = 26.3;
+            w
         },
         // Cell 6: Placeholder
-        WindowProps {
-            title: AttrValue::from("project/live-bootcamp-project"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="live-bootcamp-project" />
-            }]),
-            x: 67.2,
-            y: 39.3,
-            width: 31.6,
-            height: 26.3,
-            buffer: 20.0,
+        {
+            let mut w = get_project_window("live-bootcamp-project");
+            w.x = 67.2; w.y = 39.3; w.width = 31.6; w.height = 26.3;
+            w
         },
         // Cell 7: Mentor XMercury
-        WindowProps {
-            title: AttrValue::from("project/mentor_xmercury"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                 <ProjectLoader id="mentor_xmercury" />
-            }]),
-            x: 1.0,
-            y: 67.6,
-            width: 31.6,
-            height: 27.3,
-            buffer: 20.0,
+        {
+            let mut w = get_project_window("mentor_xmercury");
+            w.x = 1.0; w.y = 67.6; w.width = 31.6; w.height = 27.3;
+            w
         },
         // Cell 8: Mentor XLunar
-        WindowProps {
-            title: AttrValue::from("project/mentor_xlunar"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                 <ProjectLoader id="mentor_xlunar" />
-            }]),
-            x: 34.6,
-            y: 67.6,
-            width: 30.6,
-            height: 27.3,
-            buffer: 20.0,
+        {
+            let mut w = get_project_window("mentor_xlunar");
+            w.x = 34.6; w.y = 67.6; w.width = 30.6; w.height = 27.3;
+            w
         },
         // Cell 9: Placeholder
-        WindowProps {
-            title: AttrValue::from("project/placeholder_1"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="placeholder_1" />
-            }]),
-            x: 67.2,
-            y: 67.6,
-            width: 31.6,
-            height: 27.3,
-            buffer: 20.0,
+        {
+            let mut w = get_project_window("placeholder_1");
+            w.x = 67.2; w.y = 67.6; w.width = 31.6; w.height = 27.3;
+            w
         },
     ]
 }

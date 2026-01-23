@@ -1,17 +1,51 @@
 use web_sys::{Element, PointerEvent, wasm_bindgen::JsCast};
 use yew::prelude::*;
+use log::info;
+
+#[derive(Clone, PartialEq, Debug)]
+pub struct WindowState {
+    pub x: f64,
+    pub y: f64,
+    pub width: f64,
+    pub height: f64,
+    pub is_opened: bool,
+    pub is_maximized: bool,
+    pub is_minimized: bool,
+}
+
+impl Default for WindowState {
+    fn default() -> Self {
+        Self {
+            x: 0.0,
+            y: 0.0,
+            width: 30.0,
+            height: 30.0,
+            is_opened: true,
+            is_maximized: false,
+            is_minimized: false,
+        }
+    }
+}
 
 #[derive(Clone, PartialEq, Properties)]
 pub struct WindowProps {
     pub title: AttrValue,
     #[prop_or_default]
     pub content: Children,
+    // Initial props (used if state not provided or first mount)
     pub x: f64,
     pub y: f64,
     pub width: f64,
     pub height: f64,
+    
     #[prop_or(10.0)]
     pub buffer: f64,
+
+    // Controlled State Props
+    #[prop_or_default]
+    pub state: Option<WindowState>,
+    #[prop_or_default]
+    pub on_state_change: Callback<WindowState>,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -34,33 +68,63 @@ pub fn window_widget(props: &WindowProps) -> Html {
     let resizing = use_state(|| None::<ResizeDirection>);
     let resize_start_pos = use_state(|| None::<(i32, i32)>);
     
-    let x = use_state(|| props.x);
-    let y = use_state(|| props.y);
-    let width = use_state(|| props.width);
-    let height = use_state(|| props.height);
-    
-    let is_minimized = use_state(|| false);
-    let is_maximized = use_state(|| false);
-    let is_opened = use_state(|| true);
+    // Internal state fallback if not controlled (or initial values)
+    // To support smooth transition, we can use use_state to store the *current* visual state
+    // and useEffect to sync with props if props change? 
+    // Or just derive directly. If we derive directly, re-renders are instant.
+
+    let current_state = props.state.clone().unwrap_or_else(|| WindowState {
+        x: props.x,
+        y: props.y,
+        width: props.width,
+        height: props.height,
+        is_opened: true,
+        is_maximized: false,
+        is_minimized: false,
+    });
+
+    let emit_change = {
+        let on_state_change = props.on_state_change.clone();
+        Callback::from(move |new_state: WindowState| {
+            on_state_change.emit(new_state);
+        })
+    };
+
+    {
+        let title = props.title.clone();
+        use_effect_with((), move |_| {
+            info!("Window mounted: {}", title);
+            move || info!("Window unmounted: {}", title)
+        });
+    }
 
     let is_maximized_toggle = {
-        let is_maximized = is_maximized.clone();
+        let current_state = current_state.clone();
+        let emit_change = emit_change.clone();
         Callback::from(move |_| {
-            is_maximized.set(!*is_maximized);
+            let mut s = current_state.clone();
+            s.is_maximized = !s.is_maximized;
+            emit_change.emit(s);
         })
     };
 
     let is_minimized_toggle = {
-        let is_minimized = is_minimized.clone();
+        let current_state = current_state.clone();
+        let emit_change = emit_change.clone();
         Callback::from(move |_| {
-            is_minimized.set(!*is_minimized);
+            let mut s = current_state.clone();
+            s.is_minimized = !s.is_minimized;
+            emit_change.emit(s);
         })
     };
 
     let is_opened_toggle = {
-        let is_opened = is_opened.clone();
+        let current_state = current_state.clone();
+        let emit_change = emit_change.clone();
         Callback::from(move |_| {
-            is_opened.set(!*is_opened);
+            let mut s = current_state.clone();
+            s.is_opened = !s.is_opened;
+            emit_change.emit(s);
         })
     };
 
@@ -69,7 +133,7 @@ pub fn window_widget(props: &WindowProps) -> Html {
         let body_style = body_style.clone();
         Callback::from(move |e: PointerEvent| {
             e.prevent_default();
-            e.stop_propagation(); // Prevent triggering resize if clicking title bar near edge
+            e.stop_propagation();
             if let Some(target) = e.target() {
                 if let Ok(element) = target.dyn_into::<Element>() {
                     let _ = element.set_pointer_capture(e.pointer_id());
@@ -82,15 +146,9 @@ pub fn window_widget(props: &WindowProps) -> Html {
 
     let drag_window = {
         let drag = drag.clone();
-        let current_x = x.clone();
-        let current_y = y.clone();
-        let x_for_closure = x.clone();
-        let y_for_closure = y.clone();
-        let is_minimized = is_minimized.clone();
+        let current_state = current_state.clone();
+        let emit_change = emit_change.clone();
         let buffer = props.buffer;
-        // Use current width/height state instead of props
-        let current_width = width.clone();
-        let current_height = height.clone();
         
         Callback::from(move |e: PointerEvent| {
             if let Some((initial_x, initial_y)) = *drag {
@@ -105,8 +163,8 @@ pub fn window_widget(props: &WindowProps) -> Html {
                             let delta_x_p = (delta_x_px as f64 / width_px) * 100.0;
                             let delta_y_p = (delta_y_px as f64 / height_px) * 100.0;
                             
-                            let mut new_x = *current_x + delta_x_p;
-                            let mut new_y = *current_y + delta_y_p;
+                            let mut new_x = current_state.x + delta_x_p;
+                            let mut new_y = current_state.y + delta_y_p;
 
                             // Constraints
                             let buffer_px = buffer;
@@ -116,11 +174,11 @@ pub fn window_widget(props: &WindowProps) -> Html {
                             let buffer_x_p = (buffer_px / width_px) * 100.0;
                             let buffer_y_p = (buffer_px / height_px) * 100.0;
 
-                            let current_w_p = if *is_minimized { 15.0 } else { *current_width };
-                            let current_h_p = if *is_minimized { 
+                            let current_w_p = if current_state.is_minimized { 15.0 } else { current_state.width };
+                            let current_h_p = if current_state.is_minimized { 
                                 (37.0 / height_px) * 100.0 
                             } else { 
-                                *current_height 
+                                current_state.height 
                             };
 
                             let min_x = buffer_x_p;
@@ -134,9 +192,21 @@ pub fn window_widget(props: &WindowProps) -> Html {
                             if new_y < min_y { new_y = min_y; }
                             if new_y > max_y { new_y = max_y; }
 
+                            // NOTE: We do NOT set drag here because props update is async. 
+                            // But we need smooth dragging.
+                            // Issue: If we rely on props update roundtrip, drag might lag.
+                            // Solution: Keep using local state for drag offset?
+                            // OR assuming yew updates are fast enough?
+                            // For this specific task, let's try direct emit. If laggy, we might need a hybrid approach.
+                            // IMPORTANT: to keep drag consistent we should probably update drag origin to current mouse
+                            // but ONLY if we emit.
+                            
                             drag.set(Some((mouse_x, mouse_y)));
-                            x_for_closure.set(new_x);
-                            y_for_closure.set(new_y);
+                            
+                            let mut s = current_state.clone();
+                            s.x = new_x;
+                            s.y = new_y;
+                            emit_change.emit(s);
                          } 
                     }
                 }
@@ -181,14 +251,8 @@ pub fn window_widget(props: &WindowProps) -> Html {
     let resize_move = {
         let resizing = resizing.clone();
         let resize_start_pos = resize_start_pos.clone();
-        let current_x = x.clone();
-        let current_y = y.clone();
-        let current_width = width.clone();
-        let current_height = height.clone();
-        let x_setter = x.clone();
-        let y_setter = y.clone();
-        let width_setter = width.clone();
-        let height_setter = height.clone();
+        let current_state = current_state.clone();
+        let emit_change = emit_change.clone();
         let buffer = props.buffer;
 
         Callback::from(move |e: PointerEvent| {
@@ -221,29 +285,29 @@ pub fn window_widget(props: &WindowProps) -> Html {
                                 let min_y_bound = header_h_p + buffer_y_p;
                                 let max_y_bound = 100.0 - footer_h_p - buffer_y_p;
 
-                                let mut new_x = *current_x;
-                                let mut new_y = *current_y;
-                                let mut new_w = *current_width;
-                                let mut new_h = *current_height;
+                                let mut new_x = current_state.x;
+                                let mut new_y = current_state.y;
+                                let mut new_w = current_state.width;
+                                let mut new_h = current_state.height;
 
                                 match direction {
                                     ResizeDirection::Right => {
-                                        new_w = *current_width + delta_x_p;
+                                        new_w = current_state.width + delta_x_p;
                                         // Clamp Right
                                         if new_x + new_w > max_x_bound {
                                             new_w = max_x_bound - new_x;
                                         }
                                     },
                                     ResizeDirection::Bottom => {
-                                        new_h = *current_height + delta_y_p;
+                                        new_h = current_state.height + delta_y_p;
                                         // Clamp Bottom
                                         if new_y + new_h > max_y_bound {
                                             new_h = max_y_bound - new_y;
                                         }
                                     },
                                     ResizeDirection::Left => {
-                                        new_x = *current_x + delta_x_p;
-                                        new_w = *current_width - delta_x_p;
+                                        new_x = current_state.x + delta_x_p;
+                                        new_w = current_state.width - delta_x_p;
                                         // Clamp Left
                                         if new_x < min_x_bound {
                                             let diff = min_x_bound - new_x;
@@ -252,8 +316,8 @@ pub fn window_widget(props: &WindowProps) -> Html {
                                         }
                                     },
                                     ResizeDirection::Top => {
-                                        new_y = *current_y + delta_y_p;
-                                        new_h = *current_height - delta_y_p;
+                                        new_y = current_state.y + delta_y_p;
+                                        new_h = current_state.height - delta_y_p;
                                         // Clamp Top
                                         if new_y < min_y_bound {
                                             let diff = min_y_bound - new_y;
@@ -262,15 +326,15 @@ pub fn window_widget(props: &WindowProps) -> Html {
                                         }
                                     },
                                     ResizeDirection::BottomRight => {
-                                        new_w = *current_width + delta_x_p;
-                                        new_h = *current_height + delta_y_p;
+                                        new_w = current_state.width + delta_x_p;
+                                        new_h = current_state.height + delta_y_p;
                                         if new_x + new_w > max_x_bound { new_w = max_x_bound - new_x; }
                                         if new_y + new_h > max_y_bound { new_h = max_y_bound - new_y; }
                                     },
                                     ResizeDirection::BottomLeft => {
-                                        new_x = *current_x + delta_x_p;
-                                        new_w = *current_width - delta_x_p;
-                                        new_h = *current_height + delta_y_p;
+                                        new_x = current_state.x + delta_x_p;
+                                        new_w = current_state.width - delta_x_p;
+                                        new_h = current_state.height + delta_y_p;
                                         if new_x < min_x_bound {
                                             let diff = min_x_bound - new_x;
                                             new_x = min_x_bound;
@@ -279,9 +343,9 @@ pub fn window_widget(props: &WindowProps) -> Html {
                                         if new_y + new_h > max_y_bound { new_h = max_y_bound - new_y; }
                                     },
                                     ResizeDirection::TopRight => {
-                                        new_y = *current_y + delta_y_p;
-                                        new_h = *current_height - delta_y_p;
-                                        new_w = *current_width + delta_x_p;
+                                        new_y = current_state.y + delta_y_p;
+                                        new_h = current_state.height - delta_y_p;
+                                        new_w = current_state.width + delta_x_p;
                                         if new_y < min_y_bound {
                                             let diff = min_y_bound - new_y;
                                             new_y = min_y_bound;
@@ -290,10 +354,10 @@ pub fn window_widget(props: &WindowProps) -> Html {
                                         if new_x + new_w > max_x_bound { new_w = max_x_bound - new_x; }
                                     },
                                     ResizeDirection::TopLeft => {
-                                        new_x = *current_x + delta_x_p;
-                                        new_w = *current_width - delta_x_p;
-                                        new_y = *current_y + delta_y_p;
-                                        new_h = *current_height - delta_y_p;
+                                        new_x = current_state.x + delta_x_p;
+                                        new_w = current_state.width - delta_x_p;
+                                        new_y = current_state.y + delta_y_p;
+                                        new_h = current_state.height - delta_y_p;
                                         if new_x < min_x_bound {
                                             let diff = min_x_bound - new_x;
                                             new_x = min_x_bound;
@@ -313,23 +377,25 @@ pub fn window_widget(props: &WindowProps) -> Html {
                                 
                                 if new_w < min_w_p { 
                                     if matches!(direction, ResizeDirection::Left | ResizeDirection::TopLeft | ResizeDirection::BottomLeft) {
-                                        new_x = *current_x + (*current_width - min_w_p);
+                                        new_x = current_state.x + (current_state.width - min_w_p);
                                     }
                                     new_w = min_w_p; 
                                 }
                                 if new_h < min_h_p {
                                     if matches!(direction, ResizeDirection::Top | ResizeDirection::TopLeft | ResizeDirection::TopRight) {
-                                        new_y = *current_y + (*current_height - min_h_p);
+                                        new_y = current_state.y + (current_state.height - min_h_p);
                                     }
                                     new_h = min_h_p; 
                                 }
 
-                                x_setter.set(new_x);
-                                y_setter.set(new_y);
-                                width_setter.set(new_w);
-                                height_setter.set(new_h);
-                                
                                 resize_start_pos.set(Some((mouse_x, mouse_y)));
+                                
+                                let mut s = current_state.clone();
+                                s.x = new_x;
+                                s.y = new_y;
+                                s.width = new_w;
+                                s.height = new_h;
+                                emit_change.emit(s);
                             }
                         }
                     }
@@ -354,35 +420,35 @@ pub fn window_widget(props: &WindowProps) -> Html {
         })
     };
 
-    let width_style = if *is_maximized {
+    let width_style = if current_state.is_maximized {
         "98%".to_string()
     } else {
-        format!("{}%", is_minimized.then(|| 15.0).unwrap_or(*width))
+        format!("{}%", current_state.is_minimized.then(|| 15.0).unwrap_or(current_state.width))
     };
 
-    let height_style = if *is_minimized {
+    let height_style = if current_state.is_minimized {
         "37px".to_string()
-    } else if *is_maximized {
+    } else if current_state.is_maximized {
         "87%".to_string()
     } else {
-        format!("{}%", *height)
+        format!("{}%", current_state.height)
     };
 
-    let display_style = if *is_opened { "flex" } else { "none" };
+    let display_style = if current_state.is_opened { "flex" } else { "none" };
 
-    let top_style = if *is_maximized {
+    let top_style = if current_state.is_maximized {
         "10%".to_string()
     } else {
-        format!("{}%", *y)
+        format!("{}%", current_state.y)
     };
 
-    let left_style = if *is_maximized {
+    let left_style = if current_state.is_maximized {
         "1%".to_string()
     } else {
-        format!("{}%", *x)
+        format!("{}%", current_state.x)
     };
 
-    let z_index_style = if drag.is_some() || resizing.is_some() || *is_maximized {
+    let z_index_style = if drag.is_some() || resizing.is_some() || current_state.is_maximized {
         "99"
     } else {
         "0"
@@ -413,7 +479,7 @@ pub fn window_widget(props: &WindowProps) -> Html {
                     width_style, height_style, display_style, top_style, left_style, z_index_style
                 )}
             >
-                { if !*is_minimized && !*is_maximized {
+                { if !current_state.is_minimized && !current_state.is_maximized {
                     html! {
                         <>
                             { make_handle("top", ResizeDirection::Top) }
@@ -458,7 +524,7 @@ pub fn window_widget(props: &WindowProps) -> Html {
                 </div>
                 <div class="window-content">
                      {
-                        if !*is_minimized {
+                        if !current_state.is_minimized {
                             html! { for props.content.iter() }
                         } else {
                             html! {}

@@ -4,9 +4,6 @@ use rand::prelude::*;
 use crate::components::loading::Loading;
 use crate::hooks::{use_fetch, FetchState};
 use crate::types::{GreetingsList, SimpleTextContent};
-use crate::pages::cv::ExperienceLoader;
-use crate::pages::projects::ProjectLoader;
-use crate::pages::blog::{BlogLoader, BlogMode};
 use crate::components::language_context::use_language;
 
 
@@ -63,91 +60,61 @@ pub fn greetings_loader() -> Html {
     }
 }
 
+pub fn get_greeting_window() -> WindowProps {
+    WindowProps {
+        title: AttrValue::from("home/greetings"),
+        content: yew::html::ChildrenRenderer::new(vec![html! {
+            <GreetingsLoader />
+        }]),
+        x: 67.2,
+        y: 67.6,
+        width: 31.6,
+        height: 27.3,
+        buffer: 20.0,
+        state: None,
+        on_state_change: Callback::noop(),
+    }
+}
+
 pub fn get_home_windows() -> Vec<WindowProps> {
     vec![
         // Cell 1 + 4: CV (Experience)
-        WindowProps {
-            title: AttrValue::from("cv/experience"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ExperienceLoader />
-            }]),
-            x: 1.0,
-            y: 10.0,
-            width: 31.6,
-            height: 55.6,
-            buffer: 20.0,
+        {
+             let mut w = crate::pages::cv::get_experience_window();
+             w.x = 1.0; w.y = 10.0; w.width = 31.6; w.height = 55.6;
+             w
         },
         // Cell 2 + 3: About (Me)
-        WindowProps {
-            title: AttrValue::from("about/me"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <MeLoader />
-            }]),
-            x: 34.6,
-            y: 10.0,
-            width: 64.2,
-            height: 27.3,
-            buffer: 20.0,
+        {
+            let mut w = crate::pages::about::get_me_window();
+            w.x = 34.6; w.y = 10.0; w.width = 64.2; w.height = 27.3;
+            w
         },
         // Cell 5: Project (TicTacToe)
-        WindowProps {
-            title: AttrValue::from("project/tictactoe"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="tictactoe" />
-            }]),
-            x: 34.6,
-            y: 39.3,
-            width: 30.6,
-            height: 26.3,
-            buffer: 20.0,
+        {
+            let mut w = crate::pages::projects::get_project_window("tictactoe");
+            w.x = 34.6; w.y = 39.3; w.width = 30.6; w.height = 26.3;
+            w
         },
         // Cell 6: Blog (Best)
-        WindowProps {
-            title: AttrValue::from("blog/best"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <BlogLoader mode={BlogMode::Best} slug={None::<String>} />
-            }]),
-            x: 67.2,
-            y: 39.3,
-            width: 31.6,
-            height: 26.3,
-            buffer: 20.0,
-        },
+         {
+             let mut w = crate::pages::blog::get_best_window();
+             w.x = 67.2; w.y = 39.3; w.width = 31.6; w.height = 26.3;
+             w
+         },
         // Cell 7: Project (Mentor XMercury)
-        WindowProps {
-            title: AttrValue::from("project/mentor_xmercury"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="mentor_xmercury" />
-            }]),
-            x: 1.0,
-            y: 67.6,
-            width: 31.6,
-            height: 27.3,
-            buffer: 20.0,
+        {
+            let mut w = crate::pages::projects::get_project_window("mentor_xmercury");
+            w.x = 1.0; w.y = 67.6; w.width = 31.6; w.height = 27.3;
+            w
         },
         // Cell 8: Project (Mentor XLunar)
-        WindowProps {
-            title: AttrValue::from("project/mentor_xlunar"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <ProjectLoader id="mentor_xlunar" />
-            }]),
-            x: 34.6,
-            y: 67.6,
-            width: 30.6,
-            height: 27.3,
-            buffer: 20.0,
+        {
+            let mut w = crate::pages::projects::get_project_window("mentor_xlunar");
+            w.x = 34.6; w.y = 67.6; w.width = 30.6; w.height = 27.3;
+             w
         },
         // Cell 9: Home (Greetings)
-        WindowProps {
-            title: AttrValue::from("home/greetings"),
-            content: yew::html::ChildrenRenderer::new(vec![html! {
-                <GreetingsLoader />
-            }]),
-            x: 67.2,
-            y: 67.6,
-            width: 31.6,
-            height: 27.3,
-            buffer: 20.0,
-        },
+        get_greeting_window(),
     ]
 }
