@@ -48,7 +48,7 @@ pub fn footer() -> Html {
 
             <div class="footer-center">
                 <div class="rights">
-                    {"2025 - Gabriel Cardoso"}
+                    {"2026 - Gabriel Cardoso"}
                 </div>
             </div>
             
