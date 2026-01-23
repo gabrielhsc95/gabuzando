@@ -75,7 +75,7 @@ pub fn bongo_cat() -> Html {
     };
 
     html! {
-        <div class="bongo-cat" onclick={move |_| animate.emit(())}>
+        <div class="bongo-cat">
             {cat}
         </div>
     }
