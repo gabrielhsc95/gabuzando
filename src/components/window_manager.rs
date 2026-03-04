@@ -155,7 +155,7 @@ pub fn window_manager(props: &WindowManagerProps) -> Html {
                     style={format!("position: absolute; top: {}px; left: {}px; background: #252525; border: 1px solid #444; box-shadow: 0 4px 6px rgba(0,0,0,0.3); z-index: 1000; min-width: 160px; color: #eeeeee; border-radius: 4px;", menu_state.y, menu_state.x)}
                     onclick={Callback::from(|e: MouseEvent| e.stop_propagation())}
                 >
-                    { for ["home", "cv", "projects", "blog", "about"].iter().map(|cat| {
+                    { for ["home", "cv", "projects", "blog", "about", "extra"].iter().map(|cat| {
                         let cat = (*cat).to_string();
                         let is_hovered = hovered_category.as_ref() == Some(&cat);
                         
@@ -267,6 +267,12 @@ pub fn window_manager(props: &WindowManagerProps) -> Html {
                                                                 move |_| open_window.emit(crate::pages::blog::get_random_window())
                                                             }>{"Random"}</div>
                                                         </>
+                                                    },
+                                                    "extra" => html! {
+                                                        <div class="menu-item" onclick={
+                                                            let open_window = open_window.clone();
+                                                            move |_| open_window.emit(crate::pages::extra::get_terminal_window())
+                                                        }>{"Terminal"}</div>
                                                     },
                                                     _ => html! {}
                                                 }

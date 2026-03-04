@@ -132,8 +132,7 @@ pub fn get_photo_window() -> WindowProps {
         width: 31.6,
         height: 55.6,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -148,8 +147,7 @@ pub fn get_me_window() -> WindowProps {
         width: 64.2,
         height: 27.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -164,8 +162,7 @@ pub fn get_countries_window() -> WindowProps {
         width: 30.6,
         height: 26.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -180,8 +177,7 @@ pub fn get_contact_window() -> WindowProps {
         width: 31.6,
         height: 26.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -196,8 +192,7 @@ pub fn get_why_window() -> WindowProps {
         width: 64.2,
         height: 27.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -212,8 +207,7 @@ pub fn get_quote_window() -> WindowProps {
         width: 31.6,
         height: 27.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 

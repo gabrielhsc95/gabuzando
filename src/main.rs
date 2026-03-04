@@ -60,6 +60,6 @@ pub fn app() -> Html {
 fn main() {
     console_error_panic_hook::set_once();
     console_log::init_with_level(Level::Debug).unwrap();
-    info!("Gabuzando starting...");
+    info!("Gabuzando v0.1.1 starting...");
     yew::Renderer::<App>::new().render();
 }

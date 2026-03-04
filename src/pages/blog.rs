@@ -122,8 +122,7 @@ pub fn get_post_window(slug: Option<String>) -> WindowProps {
         width: 64.2,
         height: 84.9,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -138,8 +137,7 @@ pub fn get_history_window() -> WindowProps {
         width: 31.6,
         height: 27.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -154,8 +152,7 @@ pub fn get_best_window() -> WindowProps {
         width: 31.6,
         height: 26.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -170,8 +167,7 @@ pub fn get_random_window() -> WindowProps {
         width: 31.6,
         height: 27.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 

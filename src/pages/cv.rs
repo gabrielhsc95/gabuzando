@@ -108,8 +108,7 @@ pub fn get_experience_window() -> WindowProps {
         width: 31.6,
         height: 55.6,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -124,8 +123,7 @@ pub fn get_education_window() -> WindowProps {
         width: 64.2,
         height: 27.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -140,8 +138,7 @@ pub fn get_skills_window() -> WindowProps {
         width: 64.2,
         height: 26.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
@@ -156,8 +153,7 @@ pub fn get_additional_info_window() -> WindowProps {
         width: 97.8,
         height: 27.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 

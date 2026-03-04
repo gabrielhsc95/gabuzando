@@ -71,8 +71,7 @@ pub fn get_greeting_window() -> WindowProps {
         width: 31.6,
         height: 27.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 

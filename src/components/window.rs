@@ -27,7 +27,7 @@ impl Default for WindowState {
     }
 }
 
-#[derive(Clone, PartialEq, Properties)]
+#[derive(Clone, PartialEq, Properties, Default)]
 pub struct WindowProps {
     pub title: AttrValue,
     #[prop_or_default]
@@ -40,6 +40,9 @@ pub struct WindowProps {
     
     #[prop_or(10.0)]
     pub buffer: f64,
+
+    #[prop_or_default]
+    pub no_padding: bool,
 
     // Controlled State Props
     #[prop_or_default]
@@ -522,7 +525,7 @@ pub fn window_widget(props: &WindowProps) -> Html {
                         </div>
                     </div>
                 </div>
-                <div class="window-content">
+                <div class="window-content" style={if props.no_padding { "padding: 0; display: flex; flex-direction: column;" } else { "" }}>
                      {
                         if !current_state.is_minimized {
                             html! { for props.content.iter() }

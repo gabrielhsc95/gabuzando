@@ -60,8 +60,7 @@ pub fn get_project_window(id: &str) -> WindowProps {
         width: 31.6,
         height: 27.3,
         buffer: 20.0,
-        state: None,
-        on_state_change: Callback::noop(),
+        ..Default::default()
     }
 }
 
