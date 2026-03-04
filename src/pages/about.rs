@@ -8,7 +8,7 @@ use crate::components::language_context::use_language;
 
 // Loaders
 #[function_component(MeLoader)]
-fn me_loader() -> Html {
+pub fn me_loader() -> Html {
     let fetch_state = use_fetch::<SimpleTextContent>("/text/about/me.json");
     let language = use_language().language;
 
@@ -29,7 +29,7 @@ fn me_loader() -> Html {
 }
 
 #[function_component(CountriesLoader)]
-fn countries_loader() -> Html {
+pub fn countries_loader() -> Html {
     let fetch_state = use_fetch::<CountriesContent>("/text/about/countries.json");
     let language = use_language().language;
 
@@ -48,7 +48,7 @@ fn countries_loader() -> Html {
 }
 
 #[function_component(ContactLoader)]
-fn contact_loader() -> Html {
+pub fn contact_loader() -> Html {
     let fetch_state = use_fetch::<ContactContent>("/text/about/contact.json");
     let language = use_language().language;
 
@@ -69,7 +69,7 @@ fn contact_loader() -> Html {
 }
 
 #[function_component(WhyLoader)]
-fn why_loader() -> Html {
+pub fn why_loader() -> Html {
     let fetch_state = use_fetch::<SimpleTextContent>("/text/about/why_gabuzando.json");
     let language = use_language().language;
 
@@ -81,7 +81,7 @@ fn why_loader() -> Html {
 }
 
 #[function_component(QuoteLoader)]
-fn quote_loader() -> Html {
+pub fn quote_loader() -> Html {
     let fetch_state = use_fetch::<QuotesContent>("/text/about/random_quote.json");
     let language = use_language().language;
     let quote = use_state(|| None::<Quote>);

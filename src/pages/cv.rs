@@ -34,7 +34,7 @@ pub fn experience_loader() -> Html {
 }
 
 #[function_component(EducationLoader)]
-fn education_loader() -> Html {
+pub fn education_loader() -> Html {
     let fetch_state = use_fetch::<EducationContent>("/text/cv/education.json");
     let language = use_language().language;
 
@@ -59,7 +59,7 @@ fn education_loader() -> Html {
 }
 
 #[function_component(SkillsLoader)]
-fn skills_loader() -> Html {
+pub fn skills_loader() -> Html {
     let fetch_state = use_fetch::<SkillsContent>("/text/cv/skills.json");
     let language = use_language().language;
 
@@ -77,7 +77,7 @@ fn skills_loader() -> Html {
 }
 
 #[function_component(AdditionalInfoLoader)]
-fn additional_info_loader() -> Html {
+pub fn additional_info_loader() -> Html {
     let fetch_state = use_fetch::<AdditionalInfoContent>("/text/cv/additional_info.json");
     let language = use_language().language;
 
