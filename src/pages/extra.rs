@@ -31,14 +31,18 @@ pub fn terminal_window() -> Html {
         TerminalOutput::System("Welcome to Gabuzando Terminal.".to_string()),
         TerminalOutput::System("Type 'help' for a list of commands.".to_string()),
     ]);
+    let command_history = use_state(|| Vec::<String>::new());
+    let history_index = use_state(|| None::<usize>);
     let input_value = use_state(|| String::new());
     let input_ref = use_node_ref();
 
     let on_input = {
         let input_value = input_value.clone();
+        let history_index = history_index.clone();
         Callback::from(move |e: InputEvent| {
             if let Some(target) = e.target_dyn_into::<HtmlInputElement>() {
                 input_value.set(target.value());
+                history_index.set(None);
             }
         })
     };
@@ -46,6 +50,8 @@ pub fn terminal_window() -> Html {
     let on_keydown = {
         let history = history.clone();
         let input_value = input_value.clone();
+        let command_history = command_history.clone();
+        let history_index = history_index.clone();
         Callback::from(move |e: KeyboardEvent| {
             if e.key() == "Enter" {
                 let cmd = (*input_value).trim().to_string();
@@ -55,6 +61,11 @@ pub fn terminal_window() -> Html {
 
                 let mut new_history = (*history).clone();
                 new_history.push(TerminalOutput::Command(cmd.clone()));
+                
+                let mut new_cmd_history = (*command_history).clone();
+                new_cmd_history.push(cmd.clone());
+                command_history.set(new_cmd_history);
+                history_index.set(None);
                 
                 // Parse command
                 let mut parts = cmd.split_whitespace();
@@ -141,6 +152,37 @@ pub fn terminal_window() -> Html {
 
                 history.set(new_history);
                 input_value.set(String::new());
+            } else if e.key() == "ArrowUp" {
+                e.prevent_default();
+                let cmds = &*command_history;
+                if cmds.is_empty() {
+                    return;
+                }
+                
+                let new_idx = match *history_index {
+                    Some(idx) => if idx > 0 { idx - 1 } else { 0 },
+                    None => cmds.len() - 1,
+                };
+                
+                history_index.set(Some(new_idx));
+                input_value.set(cmds[new_idx].clone());
+            } else if e.key() == "ArrowDown" {
+                e.prevent_default();
+                let cmds = &*command_history;
+                if cmds.is_empty() {
+                    return;
+                }
+                
+                if let Some(idx) = *history_index {
+                    if idx + 1 < cmds.len() {
+                        let new_idx = idx + 1;
+                        history_index.set(Some(new_idx));
+                        input_value.set(cmds[new_idx].clone());
+                    } else {
+                        history_index.set(None);
+                        input_value.set(String::new());
+                    }
+                }
             }
         })
     };
